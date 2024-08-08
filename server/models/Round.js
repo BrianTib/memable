@@ -1,19 +1,20 @@
 const { Schema, model } = require('mongoose');
 const dateFormat = require('../utils/dateFormat');
-
-const { Schema } = mongoose;
+const promptSchema = require('./Prompt');
+const userSchema = require('./User');
+const scoreSchema = require('./Score');
 
 const roundSchema = new Schema({
-    prompt: promptSchema,
-    players: [userSchema],
-    scores: [scoreSchema],
-    createdAt: { 
-        type: Date, 
-        default: Date.now,
-        get: (timestamp) => dateFormat(timestamp),
-    },
-  });
+	prompt: promptSchema,
+	players: [userSchema],
+	scores: [scoreSchema],
+	createdAt: {
+		type: Date,
+		default: Date.now,
+		get: timestamp => dateFormat(timestamp),
+	},
+});
 
-const Session = mongoose.model('Round', roundSchema);
+const Round = model('Round', roundSchema);
 
 module.exports = Round;
