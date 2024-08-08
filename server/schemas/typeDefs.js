@@ -8,7 +8,7 @@ const typeDefs = `
         prompt(id: ID!): Prompt
         prompts: [Prompt]
     }
-        
+
     type Mutation {
         createUser(username: String!, password: String!): User
         updateUser(id: ID!, username: String, password: String): User
@@ -47,6 +47,34 @@ const typeDefs = `
         id: ID!
         text: String
         imageUrl: String
+    }
+
+    # Round Type
+    type Round {
+        id: ID!
+        prompt: String
+        players: [User!]!
+        scores: [PlayerResponse!]!
+        totalRoundScore: Int
+        createdAt: String
+        updatedAt: String
+    }
+
+    # Player Response Type
+    type PlayerResponse {
+        id: ID!
+        player: User
+        response: String
+        totalScore: Int
+        scores: [Score!]!
+        createdAt: String
+        updatedAt: String
+    }
+
+    # Score Type
+    type Score {
+        user: User
+        value: Int
     }
 `;
 
