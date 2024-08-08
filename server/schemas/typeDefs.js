@@ -10,7 +10,8 @@ type User {
     _id: ID
     players: [User]
     rounds: [Round]
-    
+    score: [{[string]: Int}]
+    createdAt: Date
   }
 
   type Query {
