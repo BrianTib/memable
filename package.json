@@ -4,15 +4,16 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "node server --ignore client",
-		"develop": "concurrently \"cd server && npm run start\" \"cd client && npm run dev\"",
-		"install": "cd server && npm i && cd ../client && npm i",
-		"build": "cd client && npm run build"
+	  "start": "node server --ignore client",
+	  "develop": "concurrently \"cd server && npm run start\" \"cd client && npm run dev\"",
+	  "install": "cd server && npm i && cd ../client && npm i",
+	  "build": "cd client && npm run build"
 	},
 	"keywords": [],
 	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"currently": "^0.0.8"
+	  "concurrently": "^8.2.2"
 	}
-}
+  }
+  

@@ -1,10 +1,12 @@
 import React from 'react';
 import Footer from './footer/Footer';
+import Navbar from './components/Navbar.jsx';
 
 const App = () => {
   return (
     <div className="flex flex-col min-h-screen">
       <header>
+        <Navbar />
         {/* Your header content */}
       </header>
       <main className="flex-grow w-full">
