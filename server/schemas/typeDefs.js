@@ -6,6 +6,13 @@ type User {
     password: String!
   }
 
+  type Session {
+    _id: ID
+    players: [User]
+    rounds: [Round]
+    
+  }
+
   type Query {
     users: [User]
     user(username: String!): User
