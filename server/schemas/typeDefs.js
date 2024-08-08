@@ -1,48 +1,81 @@
 const typeDefs = `
-  scalar Date
+    type Query {
+        user(id: ID!): User
+        users: [User]
+        currentUser: User
+        session(id: ID!): Session
+        sessions: [Session]
+        prompt(id: ID!): Prompt
+        prompts: [Prompt]
+    }
 
-  type User {
-    _id: ID
-    username: String!
-    email: String!
-    password: String!
-  }
+    type Mutation {
+        createUser(username: String!, password: String!): User
+        updateUser(id: ID!, username: String, password: String): User
+        deleteUser(id: ID!): Boolean
+        login(username: String!, password: String!): AuthPayload
+        createSession(isOnGoing: Boolean, rounds: [ID]): Session
+        updateSession(id: ID!, isOnGoing: Boolean, rounds: [ID]): Session
+        deleteSession(id: ID!): Boolean
+        createPrompt(text: String, imageUrl: String): Prompt
+        updatePrompt(id: ID!, text: String, imageUrl: String): Prompt
+        deletePrompt(id: ID!): Boolean
+    }
 
-  type Score {
-    player: String!
-    value: Int!
-  }
+    # Auth Payload
+    type AuthPayload {
+        token: String
+        user: User
+    }
 
-  type Prompt {
-    _id: ID
-    text: String!
-  }
+    # User Type
+    type User {
+        id: ID!
+        username: String!
+        email: String
+    }
 
-  type Round {
-    _id: ID
-    prompt: Prompt
-    players: [User]
-    scores: [Score]
-    createdAt: Date
-  }
+    # Session Type
+    type Session {
+        id: ID!
+        isOnGoing: Boolean
+        rounds: [Round]
+    }
 
-  type Session {
-    _id: ID
-    players: [User]
-    rounds: [Round]
-    scores: [Score]
-    createdAt: Date
-  }
+    # Prompt Type
+    type Prompt {
+        id: ID!
+        text: String
+        imageUrl: String
+    }
 
-  type Query {
-    users: [User]
-    user(username: String!): User
-  }
+    # Round Type
+    type Round {
+        id: ID!
+        prompt: String
+        players: [User!]!
+        scores: [PlayerResponse!]!
+        totalRoundScore: Int
+        createdAt: String
+        updatedAt: String
+    }
 
-  type Mutation {
-    addUser(username: String!, email: String!, password: String!): Auth
-    login(email: String!, password: String!): Auth
-  }
+    # Player Response Type
+    type PlayerResponse {
+        id: ID!
+        player: User
+        response: String
+        totalScore: Int
+        scores: [Score!]!
+        createdAt: String
+        updatedAt: String
+    }
+
+    # Score Type
+    type Score {
+        user: User
+        value: Int
+    }
 `;
 
 module.exports = typeDefs;

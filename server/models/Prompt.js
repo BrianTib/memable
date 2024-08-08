@@ -1,12 +1,20 @@
 const { Schema, model } = require('mongoose');
 
-const { Schema } = mongoose;
+const promptSchema = new Schema(
+    {
+        text: String,
+        imageUrl: String,
+    },
+    {
+        validate: {
+            validator: function (v) {
+                return v.text || v.imageUrl; // Ensure at least one of the fields is filled
+            },
+            message: 'Prompt must have either text or an image URL.',
+        },
+    },
+);
 
-const promptSchema = new Schema({
-    text: String,
-    image: String,
-  });
-
-const Session = mongoose.model('Prompt', promptSchema);
+const Prompt = model('Prompt', promptSchema);
 
 module.exports = Prompt;

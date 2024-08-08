@@ -1,40 +1,18 @@
-const { GraphQLError } = require('graphql');
 const jwt = require('jsonwebtoken');
 
-const secret = 'memablesecretprojectthree';
-const expiration = '2h';
+const authMiddleware = (req, res, next) => {
+    const token = req.headers.authorization || '';
 
-module.exports = {
-	AuthenticationError: new GraphQLError('Could not authenticate user.', {
-		extensions: {
-			code: 'UNAUTHENTICATED',
-		},
-	}),
-	authMiddleware: function ({ req }) {
-		// allows token to be sent via req.body, req.query, or headers
-		let token = req.body.token || req.query.token || req.headers.authorization;
+    if (token.startsWith('Bearer ')) {
+        try {
+            const decoded = jwt.verify(token.slice(7), process.env.JWT_SECRET);
+            req.user = decoded;
+        } catch (err) {
+            console.error('Invalid token');
+        }
+    }
 
-		// ["Bearer", "<tokenvalue>"]
-		if (req.headers.authorization) {
-			token = token.split(' ').pop().trim();
-		}
-
-		if (!token) {
-			return req;
-		}
-
-		try {
-			const { data } = jwt.verify(token, secret, { maxAge: expiration });
-			req.user = data;
-		} catch {
-			console.log('Invalid token');
-		}
-
-		return req;
-	},
-	signToken: function ({ email, username, _id }) {
-		const payload = { email, username, _id };
-
-		return jwt.sign({ data: payload }, secret, { expiresIn: expiration });
-	},
+    next();
 };
+
+module.exports = authMiddleware;
