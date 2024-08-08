@@ -4,10 +4,13 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"start": "node server --ignore client",
+		"build": "cd client && npm run build",
 		"dev": "concurrently \"cd server && npm run start\" \"cd client && npm run dev\"",
+		"format": "prettier --write 'client/**/*.{js,jsx,ts,tsx}' 'server/**/*.{js,jsx,ts,tsx}'",
 		"install": "cd server && npm i && cd ../client && npm i",
-		"build": "cd client && npm run build"
+		"outdated": "cd server && npm outdated && cd ../client && npm outdated",
+		"update": "cd server && npm update && cd ../client && npm update",
+		"start": "node server --ignore client"
 	},
 	"keywords": [],
 	"author": "",
