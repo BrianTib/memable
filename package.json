@@ -11,5 +11,8 @@
 	},
 	"keywords": [],
 	"author": "",
-	"license": "ISC"
+	"license": "ISC",
+	"dependencies": {
+		"currently": "^0.0.8"
+	}
 }
