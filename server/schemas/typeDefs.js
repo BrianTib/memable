@@ -14,6 +14,14 @@ type User {
     createdAt: Date
   }
 
+  type Round {
+  _id: ID
+  players: [User]
+  score: [{[string]: Int}]
+  prompt: Prompt
+  createdAt: Date
+  }
+
   type Query {
     users: [User]
     user(username: String!): User
