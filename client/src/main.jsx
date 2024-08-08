@@ -1,8 +1,8 @@
-import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { createRoot } from 'react-dom/client'
-import App from './App.jsx'
-import './index.css'
-
+import { StrictMode } from 'react';
+import { createRoot } from 'react-dom/client';
+import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import App from './App.jsx';
+import './index.css';
 
 const router = createBrowserRouter([
   {
@@ -12,14 +12,12 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <App />
+        element: <App />,
       },
-    ]
-  }
-])
-
-
+    ],
+  },
+]);
 
 createRoot(document.getElementById('root')).render(
   <RouterProvider router={router} />
-)
+);
