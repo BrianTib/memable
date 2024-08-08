@@ -1,17 +1,19 @@
 const typeDefs = `
 type User {
     _id: ID
-    username: String
-    email: String
-    password: String
-    thoughts: [Thought]!
+    username: String!
+    email: String!
+    password: String!
   }
 
   type Query {
     users: [User]
     user(username: String!): User
-    thoughts(username: String): [Thought]
-    thought(thoughtId: ID!): Thought
+  }
+
+  type Mutation {
+    addUser(username: String!, email: String!, password: String!): Auth
+    login(email: String!, password: String!): Auth
   }
 `;
 
