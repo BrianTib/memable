@@ -1,9 +1,37 @@
 const typeDefs = `
-type User {
+  scalar Date
+
+  type User {
     _id: ID
     username: String!
     email: String!
     password: String!
+  }
+
+  type Score {
+    player: String!
+    value: Int!
+  }
+
+  type Prompt {
+    _id: ID
+    text: String!
+  }
+
+  type Round {
+    _id: ID
+    prompt: Prompt
+    players: [User]
+    scores: [Score]
+    createdAt: Date
+  }
+
+  type Session {
+    _id: ID
+    players: [User]
+    rounds: [Round]
+    scores: [Score]
+    createdAt: Date
   }
 
   type Query {
