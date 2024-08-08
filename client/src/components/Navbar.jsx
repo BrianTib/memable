@@ -1,7 +1,7 @@
 import { useState } from "react";
 import {Link} from 'react-router-dom'
 
-function NavBar() {
+export default function Navbar() {
     return (
 
     <header className="bg-gray-800 md:sticky top-0 z-10">
@@ -39,5 +39,3 @@ function NavBar() {
     </header>
   );
 }
-
-export default Navbar;
