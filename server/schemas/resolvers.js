@@ -1,5 +1,4 @@
 const { User, Session, Prompt } = require('../models');
-
 const jwt = require('jsonwebtoken');
 const expiration = '2h';
 
@@ -23,7 +22,10 @@ const resolvers = {
             return user;
         },
         updateUser: async (_, { id, username, password }) => {
-            return User.findByIdAndUpdate(id, { username, password }, { new: true });
+            const updates = {};
+            if (username) updates.username = username;
+            if (password) updates.password = password;
+            return User.findByIdAndUpdate(id, updates, { new: true }).select('-password');
         },
         login: async (_, { username, password }) => {
             const user = await User.findOne({ username });
@@ -56,11 +58,13 @@ const resolvers = {
             return true;
         },
         createPrompt: async (_, { text, imageUrl }) => {
+            if (!text && !imageUrl) throw new Error('Either text or imageUrl must be provided.');
             const prompt = new Prompt({ text, imageUrl });
             await prompt.save();
             return prompt;
         },
         updatePrompt: async (_, { id, text, imageUrl }) => {
+            if (!text && !imageUrl) throw new Error('Either text or imageUrl must be provided.');
             return Prompt.findByIdAndUpdate(id, { text, imageUrl }, { new: true });
         },
         deletePrompt: async (_, { id }) => {
