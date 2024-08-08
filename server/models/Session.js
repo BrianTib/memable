@@ -3,12 +3,11 @@ const mongoose = require('mongoose');
 const { Schema } = mongoose;
 
 const sessionSchema = new Schema({
-    title: {
-        type: String,
-		required: true,
-		trim: true,
-    },
-});
+    players: [userSchema],
+    rounds: [roundSchema],
+    scores: [scoreSchema],
+    createdAt: { type: Date, default: Date.now },
+  });
 
 const User = mongoose.model('Session', sessionSchema);
 
