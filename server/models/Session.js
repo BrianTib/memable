@@ -1,20 +1,18 @@
 const { Schema, model } = require('mongoose');
 
-// This gets the total score for a player based on the scores aray
-function getPlayerScore() {
-    return this.score.reduce((acc, score) => acc + score.value, 0);
-}
-
-// This represents each response a player gives to a prompt
+// Player response schema
 const playerResponseSchema = new Schema(
     {
-        player: { type: Schema.Types.ObjectId, ref: 'User' },
-        response: String,
+        player: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+        response: { type: String, required: true },
         totalScore: {
             type: Number,
             default: 0,
-            get: getPlayerScore,
+            get: function () {
+                return this.scores.reduce((acc, score) => acc + score.value, 0);
+            },
         },
+        // An array of scores. Each user is the user who gave a score, and the value is the score they gave.
         scores: [
             {
                 user: { type: Schema.Types.ObjectId, ref: 'User' },
@@ -28,21 +26,18 @@ const playerResponseSchema = new Schema(
     },
 );
 
-// This gets the total score for a round
-function getTotalRoundScore() {
-    return this.scores.reduce((acc, score) => acc + score.totalScore, 0);
-}
-
-// This represents each round in a session
+// Round schema
 const roundSchema = new Schema(
     {
-        prompt: String,
+        prompt: { type: Schema.Types.ObjectId, ref: 'String', required: true },
         players: [{ type: Schema.Types.ObjectId, ref: 'User' }],
-        scores: [playerResponseSchema],
+        responses: [playerResponseSchema],
         totalRoundScore: {
             type: Number,
             default: 0,
-            get: getTotalRoundScore,
+            get: function () {
+                return this.responses.reduce((acc, score) => acc + score.totalScore, 0);
+            },
         },
     },
     {
@@ -51,34 +46,34 @@ const roundSchema = new Schema(
     },
 );
 
-function getCurrentRounds() {
-    this.currentRound = this.rounds.length;
-    return this.currentRound;
-}
-
-function getCurrentPlayerCount() {
-    this.currentPlayerCount = this.rounds[this.currentRound].players.length;
-    return this.currentPlayerCount;
-}
-
+// Session schema
 const sessionSchema = new Schema(
     {
         isOnGoing: { type: Boolean, default: true },
-        currentPlayerCount: { type: Number, default: 0, get: getCurrentPlayerCount },
-        currentRound: { type: Number, default: 1, get: getCurrentRounds },
-        rounds: [
-            {
-                type: Schema.Types.ObjectId,
-                ref: 'Round',
-                // Each session must have at least one round
-                validate: {
-                    validator: function (v) {
-                        return v.length > 0;
-                    },
-                    message: 'A session must have at least one round.',
-                },
+        owner: { type: Schema.Types.ObjectId, ref: 'User', required: true },
+        currentPlayerCount: {
+            type: Number,
+            default: 0,
+            get: function () {
+                return this.rounds[this.rounds.length - 1]?.players.length || 0;
             },
-        ],
+        },
+        currentRound: {
+            type: Number,
+            default: 1,
+            get: function () {
+                return this.rounds.length;
+            },
+        },
+        rounds: {
+            type: [roundSchema],
+            validate: {
+                validator: function (v) {
+                    return v.length > 0;
+                },
+                message: 'A session must have at least one round.',
+            },
+        },
     },
     {
         timestamps: true,

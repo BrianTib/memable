@@ -1,48 +1,31 @@
 const typeDefs = `
-  scalar Date
+    # Queries
+    type Query {
+        user(id: ID!): User
+        users: [User]
+        currentUser: User
+    }
 
-  type User {
-    _id: ID
-    username: String!
-    email: String!
-    password: String!
-  }
+    # Mutations
+    type Mutation {
+        createUser(username: String!, password: String!): User
+        updateUser(id: ID!, username: String, password: String): User
+        deleteUser(id: ID!): Boolean
+        login(username: String!, password: String!): AuthPayload
+    }
 
-  type Score {
-    player: String!
-    value: Int!
-  }
+    # Auth Payload
+    type AuthPayload {
+        token: String
+        user: User
+    }
 
-  type Prompt {
-    _id: ID
-    text: String!
-  }
-
-  type Round {
-    _id: ID
-    prompt: Prompt
-    players: [User]
-    scores: [Score]
-    createdAt: Date
-  }
-
-  type Session {
-    _id: ID
-    players: [User]
-    rounds: [Round]
-    scores: [Score]
-    createdAt: Date
-  }
-
-  type Query {
-    users: [User]
-    user(username: String!): User
-  }
-
-  type Mutation {
-    addUser(username: String!, email: String!, password: String!): Auth
-    login(email: String!, password: String!): Auth
-  }
+    # User Type
+    type User {
+        id: ID!
+        username: String!
+        password: String
+    }
 `;
 
 module.exports = typeDefs;
