@@ -7,6 +7,7 @@ import Footer from './components/Footer.jsx';
 import Leaderboards from './pages/Leaderboards.jsx';
 import './global.css';
 
+
 const router = createBrowserRouter([
     {
         path: '/',
