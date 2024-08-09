@@ -4,6 +4,7 @@ import Root from './Root.jsx';
 import Home from './pages/Home.jsx';
 import Navbar from './components/Navbar.jsx';
 import Footer from './components/Footer.jsx';
+import Leaderboards from './pages/Leaderboards.jsx';
 import './global.css';
 
 const router = createBrowserRouter([
@@ -16,8 +17,13 @@ const router = createBrowserRouter([
                 index: true,
                 element: <Home />,
             },
+            {
+                path: '/leaderboards',
+                element: <Leaderboards />,
+            }
         ],
     },
+
 ]);
 
 createRoot(document.getElementById('root')).render(<RouterProvider router={router} />);
