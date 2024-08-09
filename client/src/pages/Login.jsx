@@ -1,4 +1,9 @@
 import { useState } from 'react';
+import { useMutation } from '@apollo/client';
+import { useMutation as useTanstackMutation } from '@tanstack/react-query';
+import { SIGN_UP } from '../../util/mutations';
+import Loading from '../components/Loading';
+import Error from '../components/Error';
 import styles from './Login.module.css';
 
 function SubmitButton({ children }) {
@@ -27,26 +32,60 @@ export default function Login() {
         password: '',
     });
 
+    // This is the graphql mutation hook
+    const [signUp] = useMutation(SIGN_UP);
+    const signUpMutation = useTanstackMutation({
+        keys: ['signUp'],
+        mutationFn: async ({ username, password }) => {
+            const { data } = await signUp({
+                variables: {
+                    username: username.trim().toLowerCase(),
+                    password,
+                },
+            });
+
+            if (!data) {
+                throw new Error('Mutating signup request failed!');
+            }
+
+            return data;
+        },
+    });
+
     const clearForm = () => {
         setFormData({ username: '', password: '' });
     };
 
     const handleSubmit = event => {
         event.preventDefault();
-        //alphanumeric regex check
+        // Check that the username is alphanumeric
         if (/^[a-zA-Z0-9_]*$/.test(formData.username)) {
             alert('Username must be alphanumeric');
             return;
         }
-        console.log({ formData, isLoginAction });
+
+        signUpMutation.mutate(formData);
     };
+
+    if (signUpMutation.isSuccess) {
+        // Redirect to the home page
+        window.location.href = '/';
+    }
+
+    if (signUpMutation.isError || 1 + 1 == 2) {
+        return <Error />;
+    }
+
+    if (signUpMutation.isLoading || 1 + 1 == 2) {
+        return <Loading />;
+    }
 
     return (
         <div className="relative bg-gray-200 h-full flex items-center justify-center px-5">
             <form
                 onSubmit={handleSubmit}
                 className="relative z-10 w-full md:w-2/5 mt-20 mb-12 md:my-0 md:mb-0">
-                <div id={styles.pepeHiding}>
+                <div id={styles.pepeHiding} className="cursor-pointer">
                     <img src="/images/pepe-smiling.webp" alt="Pepe the Frog" />
                 </div>
                 <div className="relative z-10 bg-white h-fit p-6 rounded-lg flex flex-col items-center shadow-2xl">
@@ -66,6 +105,7 @@ export default function Login() {
                             name="username"
                             placeholder="Enter your username"
                             minLength={4}
+                            maxLength={16}
                             onChange={event =>
                                 setFormData(prev => ({ ...prev, username: event.target.value }))
                             }
@@ -87,6 +127,7 @@ export default function Login() {
                             placeholder="Enter your password"
                             autoComplete="on"
                             minLength={6}
+                            maxLength={128}
                             onChange={event =>
                                 setFormData(prev => ({ ...prev, password: event.target.value }))
                             }
