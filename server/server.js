@@ -23,13 +23,6 @@ const startApolloServer = async () => {
     app.use(express.json());
 
     // Serve up static assets
-    app.use(
-        '/graphql',
-        expressMiddleware(server, {
-            context: authMiddleware,
-        }),
-    );
-
     if (process.env.NODE_ENV === 'production') {
         app.use(express.static(path.join(__dirname, '../client/dist')));
 
@@ -37,6 +30,13 @@ const startApolloServer = async () => {
             res.sendFile(path.join(__dirname, '../client/dist/index.html'));
         });
     }
+
+    app.use(
+        '/graphql',
+        expressMiddleware(server, {
+            context: authMiddleware,
+        }),
+    );
 
     db.once('open', () => {
         app.listen(PORT, () => {

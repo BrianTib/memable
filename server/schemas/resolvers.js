@@ -31,6 +31,13 @@ const resolvers = {
             return { token, user };
         },
         signUp: async (_, { username, password }) => {
+            console.log('signUp', { username, password, JWT_SECRET: process.env.JWT_SECRET });
+            const existingUser = await User.findOne({ username });
+            console.log('existingUser', existingUser);
+            if (existingUser) {
+                throw new Error('Username already exists');
+            }
+
             // This only works if there is no user with the same username
             const user = await User.create({ username, password });
             if (!user) {

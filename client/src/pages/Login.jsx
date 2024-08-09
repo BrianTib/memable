@@ -37,18 +37,25 @@ export default function Login() {
     const signUpMutation = useTanstackMutation({
         keys: ['signUp'],
         mutationFn: async ({ username, password }) => {
-            const { data } = await signUp({
-                variables: {
-                    username: username.trim().toLowerCase(),
-                    password,
-                },
-            });
+            try {
+                console.log('signUpMutation', { username, password });
 
-            if (!data) {
-                throw new Error('Mutating signup request failed!');
+                const { data } = await signUp({
+                    variables: {
+                        username: username.trim().toLowerCase(),
+                        password,
+                    },
+                });
+
+                if (!data) {
+                    throw new Error('Sign up request failed!');
+                }
+
+                return data;
+            } catch (error) {
+                console.error(error);
+                throw new Error('Sign up request failed!');
             }
-
-            return data;
         },
     });
 
@@ -59,8 +66,14 @@ export default function Login() {
     const handleSubmit = event => {
         event.preventDefault();
         // Check that the username is alphanumeric
-        if (/^[a-zA-Z0-9_]*$/.test(formData.username)) {
+        if (!/^[a-zA-Z0-9_]*$/.test(formData.username)) {
             alert('Username must be alphanumeric');
+            return;
+        }
+
+        if (isLoginAction) {
+            // Login
+            // loginMutation.mutate(formData);
             return;
         }
 
@@ -72,11 +85,11 @@ export default function Login() {
         window.location.href = '/';
     }
 
-    if (signUpMutation.isError || 1 + 1 == 2) {
+    if (signUpMutation.isError) {
         return <Error />;
     }
 
-    if (signUpMutation.isLoading || 1 + 1 == 2) {
+    if (signUpMutation.isLoading) {
         return <Loading />;
     }
 
@@ -106,6 +119,7 @@ export default function Login() {
                             placeholder="Enter your username"
                             minLength={4}
                             maxLength={16}
+                            value={formData.username}
                             onChange={event =>
                                 setFormData(prev => ({ ...prev, username: event.target.value }))
                             }
@@ -128,6 +142,7 @@ export default function Login() {
                             autoComplete="on"
                             minLength={6}
                             maxLength={128}
+                            value={formData.password}
                             onChange={event =>
                                 setFormData(prev => ({ ...prev, password: event.target.value }))
                             }

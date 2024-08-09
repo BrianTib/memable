@@ -30,28 +30,28 @@ const typeDefs = `
 
     # User Type
     type User {
-        id: ID!
+        _id: ID!
         username: String!
         password: String
     }
 
     # Session Type
     type Session {
-        id: ID!
+        _id: ID!
         isOnGoing: Boolean
         rounds: [Round]
     }
 
     # Prompt Type
     type Prompt {
-        id: ID!
+        _id: ID!
         text: String
         imageUrl: String
     }
 
     # Round Type
     type Round {
-        id: ID!
+        _id: ID!
         prompt: String
         players: [User!]!
         scores: [PlayerResponse!]!
@@ -62,7 +62,7 @@ const typeDefs = `
 
     # Player Response Type
     type PlayerResponse {
-        id: ID!
+        _id: ID!
         player: User
         response: String
         totalScore: Int
