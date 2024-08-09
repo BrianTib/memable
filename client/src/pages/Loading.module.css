@@ -1,0 +1,40 @@
+#loading {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    animation: pepeWalkInOut 4s ease-in-out infinite;
+}
+
+#loading img {
+    background-color: transparent;
+    mix-blend-mode: multiply;
+}
+
+@keyframes pepeWalkInOut {
+    0% {
+        transform: translateX(-50%);
+    }
+
+    100% {
+        transform: translateX(150%);
+    }
+}
+
+/* Mobile-specific animation */
+@media (max-width: 768px) {
+    #loading {
+        animation: pepeWalkInOutMobile 6s linear infinite;
+    }
+
+    @keyframes pepeWalkInOutMobile {
+        0% {
+            transform: scaleX(1) translateX(-100%);
+        }
+        50% {
+            transform: translateX(100%);
+        }
+        100% {
+            transform: scaleX(-1) translateX(-100%);
+        }
+    }
+}
