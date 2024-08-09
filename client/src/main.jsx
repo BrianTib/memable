@@ -6,6 +6,7 @@ import Root from './Root.jsx';
 // Pages
 import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
+import Loading from './pages/Loading.jsx';
 
 const router = createBrowserRouter([
     {

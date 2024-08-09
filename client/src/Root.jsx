@@ -1,5 +1,7 @@
+import { Suspense } from 'react';
 import Footer from './components/Footer.jsx';
 import Navbar from './components/Navbar.jsx';
+import Loading from './pages/Loading.jsx';
 import { Outlet } from 'react-router-dom';
 
 export default function Root() {
@@ -9,7 +11,9 @@ export default function Root() {
                 <Navbar />
             </header>
             <main className="flex-grow w-full">
-                <Outlet />
+                <Suspense fallback={<Loading />}>
+                    <Outlet />
+                </Suspense>
             </main>
             <Footer />
         </div>
