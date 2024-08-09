@@ -18,7 +18,7 @@ function LinkItem({ to, text, isActive }) {
 function ButtonItem({ text, theme }) {
     const themeClass =
         theme === 'light'
-            ? 'bg-white text-black'
+            ? 'bg-white text-black border-2 border-black'
             : theme === 'danger'
               ? 'bg-white text-red-500 border-2 border-red-500'
               : 'bg-black text-white';
@@ -31,7 +31,7 @@ function ButtonItem({ text, theme }) {
 }
 
 export default function Navbar() {
-    const [isLoggedIn, setIsLoggedIn] = useState(true);
+    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const location = useLocation();
 
     const isActive = path => {
@@ -40,7 +40,7 @@ export default function Navbar() {
 
     return (
         <nav>
-            <div className="w-full flex flex-wrap items-center justify-between px-2 md:px-12">
+            <div className="w-full flex flex-wrap items-center justify-between px-2 md:px-1 lg:px-12">
                 <Link to="/" className="flex items-center space-x-5 rtl:space-x-reverse">
                     <img src="logo.png" className="h-auto w-20 md:w-20" alt="Memable Logo" />
                     <span className="self-center text-3xl md:text-4xl text-black font-bold whitespace-nowrap">
