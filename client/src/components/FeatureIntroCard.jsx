@@ -8,9 +8,7 @@ const FeatureIntroCard = ({ Icon, title, description }) => {
                     <Icon />
                 </div>
                 <h3 className="text-center font-bold mt-2">{title}</h3>
-                <p className="text-center mt-2">
-                    Join a session with friends or create your own session.
-                </p>
+                <p className="text-center mt-2">{description}</p>
             </div>
         </li>
     );

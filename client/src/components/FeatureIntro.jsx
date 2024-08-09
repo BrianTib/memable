@@ -2,13 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import FeatureIntroCard from './FeatureIntroCard';
 import IconShakingHands from './icons/IconShakingHands';
+import IconText from './icons/IconText';
 
 const FeatureIntro = () => {
     const features = [
         {
             title: 'Join / Create a session',
-            description: ' Join a session with friends or create your own session.',
+            description: 'Join a session with friends or create your own session.',
             icon: IconShakingHands,
+        },
+        {
+            title: 'Get a prompt',
+            description: 'Each round you will get a random prompt to find the perfect GIF for',
+            icon: IconText,
         },
     ];
 
@@ -28,30 +34,6 @@ const FeatureIntro = () => {
                         Icon={feature.icon}
                     />
                 ))}
-
-                <li>
-                    <div className="w-72 h-44 p-6 flex flex-col bg-zinc-300 rounded-lg items-center">
-                        <div>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth="1.5"
-                                stroke="#000"
-                                className="w-10 h-10">
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227q1.694.25 3.423.379c.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48 48 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.4 48.4 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741z"
-                                />
-                            </svg>
-                        </div>
-                        <h3 className="text-center font-bold mt-2">Get a prompt</h3>
-                        <p className="text-center mt-2">
-                            Each round you will get a random prompt to find the perfect GIF for
-                        </p>
-                    </div>
-                </li>
 
                 <li>
                     <div className="w-72 h-44 p-6 flex flex-col bg-zinc-300 rounded-lg items-center">
