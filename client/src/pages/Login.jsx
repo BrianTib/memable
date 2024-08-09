@@ -28,17 +28,24 @@ export default function Login() {
         password: '',
     });
 
-    const formRef = useRef(null);
-
+    
     const clearForm = () => {
         setFormData({ username: '', password: '' });
     };
 
-    useEffect(() => {}, []);
-
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        //alphanumeric regex check
+        if (/^[a-zA-Z0-9_]*$/.test(formData.username)) {
+            alert('Username must be alphanumeric');
+            return;
+        }
+        console.log({ formData, isLoginAction })
+    }
+    
     return (
         <div className="relative bg-gray-200 h-full flex items-center justify-center px-5">
-            <form ref={formRef} className="relative z-10 w-full md:w-2/5">
+            <form onSubmit={handleSubmit} className="relative z-10 w-full md:w-2/5">
                 <div id={styles.pepeHiding}>
                     <img src="/images/pepe-smiling.webp" alt="Pepe the Frog" />
                 </div>
@@ -59,6 +66,7 @@ export default function Login() {
                             name="username"
                             placeholder="Enter your username"
                             minLength={4}
+                            onChange={(event)=>setFormData(prev => ({...prev, username:event.target.value}))}
                             required
                         />
                         <small className="text-[#55883A]">
@@ -77,6 +85,7 @@ export default function Login() {
                             placeholder="Enter your password"
                             autoComplete="on"
                             minLength={8}
+                            onChange={(event)=>setFormData(prev => ({...prev, password:event.target.value}))}
                             required
                         />
                         <small className="text-[#55883A]">
