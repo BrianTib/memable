@@ -18,7 +18,7 @@ function LinkItem({ to, text, isActive }) {
 function ButtonItem({ text, theme }) {
     const themeClass =
         theme === 'light'
-            ? 'bg-white text-black border-2 border-black'
+            ? 'bg-white text-black border-2 border-gray-500'
             : theme === 'danger'
               ? 'bg-white text-red-500 border-2 border-red-500'
               : 'bg-black text-white';
@@ -69,7 +69,7 @@ export default function Navbar() {
                     </svg>
                 </button>
                 <div className="hidden w-full md:block md:w-auto" id="navbar-default">
-                    <ul className="font-medium flex flex-col p-0 border border-gray-100 md:flex-row md:space-x-8 rtl:space-x-reverse">
+                    <ul className="font-medium flex flex-col p-0 border border-gray-100 space-y-4 md:space-y-0 md:flex-row md:space-x-8 rtl:space-x-reverse">
                         {isLoggedIn && (
                             <LinkItem isActive={isActive} to="/profile" text="John Doe" />
                         )}

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default function Page() {
     return (
@@ -96,11 +97,25 @@ export default function Page() {
                             </div>
                             <h3 className="text-center font-bold mt-2">Vote for a winner</h3>
                             <p className="text-center mt-2">
-                                Give scores to your friend’s memes and find out who’s the funniest
+                                Give scores to your friend&apos;s memes and find out who&apos;s the
+                                funniest
                             </p>
                         </div>
                     </li>
                 </ul>
+
+                <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-10">
+                    <Link
+                        to="/login"
+                        className="w-fit text-lg bg-black text-white py-2 px-8 rounded-lg">
+                        Get Started
+                    </Link>
+                    <Link
+                        to="/how-to-play"
+                        className="w-fit text-lg bg-white text-black font-bold py-2 px-8 rounded-lg border-2 border-gray-400">
+                        How to play
+                    </Link>
+                </div>
             </section>
             <section>World</section>
             <section></section>
