@@ -1,10 +1,11 @@
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Root from './Root.jsx';
-import Home from './pages/Home.jsx';
-import Navbar from './components/Navbar.jsx';
-import Footer from './components/Footer.jsx';
 import './global.css';
+import Root from './Root.jsx';
+
+// Pages
+import Home from './pages/Home.jsx';
+import Login from './pages/Login.jsx';
 
 const router = createBrowserRouter([
     {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
             {
                 index: true,
                 element: <Home />,
+            },
+            {
+                path: 'login',
+                element: <Login />,
             },
         ],
     },
