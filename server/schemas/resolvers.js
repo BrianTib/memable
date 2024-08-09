@@ -16,17 +16,6 @@ const resolvers = {
         prompts: async () => Prompt.find(),
     },
     Mutation: {
-        createUser: async (_, { username, password }) => {
-            const user = new User({ username, password });
-            await user.save();
-            return user;
-        },
-        updateUser: async (_, { id, username, password }) => {
-            const updates = {};
-            if (username) updates.username = username;
-            if (password) updates.password = password;
-            return User.findByIdAndUpdate(id, updates, { new: true }).select('-password');
-        },
         login: async (_, { username, password }) => {
             const user = await User.findOne({ username });
             if (!user || !(await user.isCorrectPassword(password))) {
@@ -40,6 +29,27 @@ const resolvers = {
                 },
             );
             return { token, user };
+        },
+        signUp: async (_, { username, password }) => {
+            // This only works if there is no user with the same username
+            const user = await User.create({ username, password });
+            if (!user) {
+                throw new Error('Something went wrong!');
+            }
+            const token = jwt.sign(
+                { id: user.id, username: user.username },
+                process.env.JWT_SECRET,
+                {
+                    expiresIn: expiration,
+                },
+            );
+            return { token, user };
+        },
+        updateUser: async (_, { id, username, password }) => {
+            const updates = {};
+            if (username) updates.username = username;
+            if (password) updates.password = password;
+            return User.findByIdAndUpdate(id, updates, { new: true }).select('-password');
         },
         deleteUser: async (_, { id }) => {
             await User.findByIdAndDelete(id);

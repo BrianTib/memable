@@ -1,6 +1,5 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState } from 'react';
 import styles from './Login.module.css';
-
 
 function SubmitButton({ children }) {
     return (
@@ -28,21 +27,20 @@ export default function Login() {
         password: '',
     });
 
-    
     const clearForm = () => {
         setFormData({ username: '', password: '' });
     };
 
-    const handleSubmit = (event) => {
+    const handleSubmit = event => {
         event.preventDefault();
         //alphanumeric regex check
         if (/^[a-zA-Z0-9_]*$/.test(formData.username)) {
             alert('Username must be alphanumeric');
             return;
         }
-        console.log({ formData, isLoginAction })
-    }
-    
+        console.log({ formData, isLoginAction });
+    };
+
     return (
         <div className="relative bg-gray-200 h-full flex items-center justify-center px-5">
             <form onSubmit={handleSubmit} className="relative z-10 w-full md:w-2/5">
@@ -66,7 +64,9 @@ export default function Login() {
                             name="username"
                             placeholder="Enter your username"
                             minLength={4}
-                            onChange={(event)=>setFormData(prev => ({...prev, username:event.target.value}))}
+                            onChange={event =>
+                                setFormData(prev => ({ ...prev, username: event.target.value }))
+                            }
                             required
                         />
                         <small className="text-[#55883A]">
@@ -85,7 +85,9 @@ export default function Login() {
                             placeholder="Enter your password"
                             autoComplete="on"
                             minLength={8}
-                            onChange={(event)=>setFormData(prev => ({...prev, password:event.target.value}))}
+                            onChange={event =>
+                                setFormData(prev => ({ ...prev, password: event.target.value }))
+                            }
                             required
                         />
                         <small className="text-[#55883A]">
