@@ -1,12 +1,10 @@
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import './global.css';
 import Root from './Root.jsx';
-
-// Pages
 import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
-import Loading from './pages/Loading.jsx';
+import Leaderboards from './pages/Leaderboards.jsx';
+import './global.css';
 
 const router = createBrowserRouter([
     {
@@ -19,8 +17,12 @@ const router = createBrowserRouter([
                 element: <Home />,
             },
             {
-                path: 'login',
+                path: '/login',
                 element: <Login />,
+            },
+            {
+                path: '/leaderboards',
+                element: <Leaderboards />,
             },
         ],
     },

@@ -76,7 +76,7 @@ export default function Navbar() {
                             <LinkItem isActive={isActive} to="/profile" text="John Doe" />
                         )}
                         <LinkItem isActive={isActive} to="/how-to-play" text="How to play" />
-                        <LinkItem isActive={isActive} to="/leaderboards" text="Leaderboards" />
+                        <LinkItem isActive={isActive} to="/leaderboards" text="Leaderboard" />
                         <LinkItem isActive={isActive} to="/top-memes" text="Top Memes" />
                         {isLoggedIn ? (
                             <ButtonItem text="Logout" theme="danger" />
