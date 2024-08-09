@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import FeatureIntroCard from './FeatureIntroCard';
 import IconShakingHands from './icons/IconShakingHands';
 import IconText from './icons/IconText';
+import IconGIF from './icons/IconGIF';
 
 const FeatureIntro = () => {
     const features = [
@@ -15,6 +16,11 @@ const FeatureIntro = () => {
             title: 'Get a prompt',
             description: 'Each round you will get a random prompt to find the perfect GIF for',
             icon: IconText,
+        },
+        {
+            title: 'Find a funny GIF',
+            description: 'Use the text prompt to find a funny GIF that suits the prompt',
+            icon: IconGIF,
         },
     ];
 
@@ -34,30 +40,6 @@ const FeatureIntro = () => {
                         Icon={feature.icon}
                     />
                 ))}
-
-                <li>
-                    <div className="w-72 h-44 p-6 flex flex-col bg-zinc-300 rounded-lg items-center">
-                        <div>
-                            <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                className="w-10 h-10"
-                                fill="none"
-                                viewBox="0 0 24 24"
-                                strokeWidth="1.5"
-                                stroke="currentColor">
-                                <path
-                                    strokeLinecap="round"
-                                    strokeLinejoin="round"
-                                    d="M12.75 8.25v7.5m6-7.5h-3V12m0 0v3.75m0-3.75H18M9.75 9.348c-1.03-1.464-2.698-1.464-3.728 0-1.03 1.465-1.03 3.84 0 5.304s2.699 1.464 3.728 0V12h-1.5M4.5 19.5h15a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 19.5 4.5h-15a2.25 2.25 0 0 0-2.25 2.25v10.5A2.25 2.25 0 0 0 4.5 19.5"
-                                />
-                            </svg>
-                        </div>
-                        <h3 className="text-center font-bold mt-2">Find a funny GIF</h3>
-                        <p className="text-center mt-2">
-                            Use the text prompt to find a funny GIF that suits the prompt
-                        </p>
-                    </div>
-                </li>
 
                 <li>
                     <div className="w-72 h-44 p-6 flex flex-col bg-zinc-300 rounded-lg items-center">
