@@ -46,10 +46,13 @@ export default function Login() {
 
                     <span className="text-gray-500">Sign in or create an account</span>
 
-                    <label htmlFor="username" className="flex flex-col gap-3 w-full mt-8">
+                    <h3 className="text-[#55883A] text-2xl font-bold w-full my-4">
+                        {isLoginAction ? 'Login' : 'Sign Up'}
+                    </h3>
+                    <label htmlFor="username" className="flex flex-col gap-3 w-full">
                         Username
                         <input
-                            className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-0"
+                            className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-[#55883A] focus:ring-0 focus:text-[#55883A]"
                             type="text"
                             id="username"
                             name="username"
@@ -66,7 +69,7 @@ export default function Login() {
                     <label htmlFor="password" className="flex flex-col gap-3 w-full mt-8">
                         Password
                         <input
-                            className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:outline-none focus:ring-0"
+                            className="w-full px-4 py-2 border-2 border-gray-300 rounded-lg focus:border-[#55883A] focus:ring-0 focus:text-[#55883A]"
                             type="password"
                             id="password"
                             name="password"
