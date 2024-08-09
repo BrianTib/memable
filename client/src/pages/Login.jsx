@@ -43,7 +43,9 @@ export default function Login() {
 
     return (
         <div className="relative bg-gray-200 h-full flex items-center justify-center px-5">
-            <form onSubmit={handleSubmit} className="relative z-10 w-full md:w-2/5">
+            <form
+                onSubmit={handleSubmit}
+                className="relative z-10 w-full md:w-2/5 mt-20 mb-12 md:my-0 md:mb-0">
                 <div id={styles.pepeHiding}>
                     <img src="/images/pepe-smiling.webp" alt="Pepe the Frog" />
                 </div>
@@ -70,8 +72,8 @@ export default function Login() {
                             required
                         />
                         <small className="text-[#55883A]">
-                            Your username should only have alphanumeric characters and be at least 4
-                            characters in length
+                            Your username should be lowercase and alphanumeric. It must also be at
+                            least 4 characters long
                         </small>
                     </label>
 
@@ -84,14 +86,14 @@ export default function Login() {
                             name="password"
                             placeholder="Enter your password"
                             autoComplete="on"
-                            minLength={8}
+                            minLength={6}
                             onChange={event =>
                                 setFormData(prev => ({ ...prev, password: event.target.value }))
                             }
                             required
                         />
                         <small className="text-[#55883A]">
-                            Your password should be at least 8 characters in length
+                            Your password should be at least 6 characters in length
                         </small>
                     </label>
 

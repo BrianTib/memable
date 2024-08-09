@@ -1,25 +1,25 @@
 const typeDefs = `
     type Query {
-        user(id: ID!): User
-        users: [User]
         currentUser: User
-        session(id: ID!): Session
-        sessions: [Session]
         prompt(id: ID!): Prompt
         prompts: [Prompt]
+        session(id: ID!): Session
+        sessions: [Session]
+        user(id: ID!): User
+        users: [User]
     }
 
     type Mutation {
-        createUser(username: String!, password: String!): User
-        updateUser(id: ID!, username: String, password: String): User
+        createPrompt(text: String, imageUrl: String): Prompt
+        createSession(isOnGoing: Boolean, rounds: [ID]): Session
+        deletePrompt(id: ID!): Boolean
+        deleteSession(id: ID!): Boolean
         deleteUser(id: ID!): Boolean
         login(username: String!, password: String!): AuthPayload
-        createSession(isOnGoing: Boolean, rounds: [ID]): Session
-        updateSession(id: ID!, isOnGoing: Boolean, rounds: [ID]): Session
-        deleteSession(id: ID!): Boolean
-        createPrompt(text: String, imageUrl: String): Prompt
+        signUp(username: String!, password: String!): AuthPayload
         updatePrompt(id: ID!, text: String, imageUrl: String): Prompt
-        deletePrompt(id: ID!): Boolean
+        updateSession(id: ID!, isOnGoing: Boolean, rounds: [ID]): Session
+        updateUser(id: ID!, username: String, password: String): User
     }
 
     # Auth Payload
