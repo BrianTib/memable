@@ -165,7 +165,7 @@ export default function Page() {
                     <p className="text-center">The talented team behind the Memable website.</p>
                 </div>
                 <div>
-                    <ul className="flex flex-col gap-2 md:grid md:grid-rows-3 lg:grid-rows-2 md:grid-flow-col md:gap-3">
+                    <ul className="flex flex-col gap-4 md:grid md:grid-rows-3 lg:grid-rows-2 md:grid-flow-col md:gap-3">
                         <li>
                             <DeveloperCard
                                 name="Brian Tiburcio"
