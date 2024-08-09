@@ -15,7 +15,7 @@ function LinkItem({ to, text, isActive }) {
     );
 }
 
-function ButtonItem({ text, theme }) {
+function ButtonItem({ text, theme, to }) {
     const themeClass =
         theme === 'light'
             ? 'bg-white text-black border-2 border-gray-500'
@@ -24,10 +24,11 @@ function ButtonItem({ text, theme }) {
               : 'bg-black text-white';
 
     return (
-        <button
+        <Link
+            to={to}
             className={`block py-2 px-4 md:px-8 xl:px-12 ${themeClass} rounded-lg w-full md:w-auto`}>
             {text}
-        </button>
+        </Link>
     );
 }
 
@@ -81,8 +82,8 @@ export default function Navbar() {
                             <ButtonItem text="Logout" theme="danger" />
                         ) : (
                             <>
-                                <ButtonItem text="Login" />
-                                <ButtonItem text="Sign Up" theme="light" />
+                                <ButtonItem to="/login" text="Login" />
+                                <ButtonItem to="/login" text="Sign Up" theme="light" />
                             </>
                         )}
                     </ul>
