@@ -33,9 +33,8 @@ const resolvers = {
         signUp: async (_, { username, password }) => {
             console.log('signUp', { username, password, JWT_SECRET: process.env.JWT_SECRET });
             const existingUser = await User.findOne({ username });
-            console.log('existingUser', existingUser);
             if (existingUser) {
-                throw new Error('Username already exists');
+                throw new Error('That username is not available');
             }
 
             // This only works if there is no user with the same username
@@ -43,6 +42,7 @@ const resolvers = {
             if (!user) {
                 throw new Error('Something went wrong!');
             }
+
             const token = jwt.sign(
                 { id: user.id, username: user.username },
                 process.env.JWT_SECRET,
@@ -50,6 +50,9 @@ const resolvers = {
                     expiresIn: expiration,
                 },
             );
+
+            console.log({ token, user });
+
             return { token, user };
         },
         updateUser: async (_, { id, username, password }) => {
