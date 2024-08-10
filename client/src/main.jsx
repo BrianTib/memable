@@ -1,5 +1,6 @@
 import { createRoot } from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import Error from './components/Error.jsx';
 import Root from './Root.jsx';
 import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
@@ -10,7 +11,7 @@ const router = createBrowserRouter([
     {
         path: '/',
         element: <Root />,
-        errorElement: <h1 className="display-2">Wrong page!</h1>,
+        errorElement: <Error />,
         children: [
             {
                 index: true,

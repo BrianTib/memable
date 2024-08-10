@@ -1,22 +1,23 @@
 {
-	"name": "memable",
-	"version": "1.0.0",
-	"description": "",
-	"main": "index.js",
-	"scripts": {
-		"build": "cd client && npm run build",
-		"dev": "concurrently \"cd server && npm run start\" \"cd client && npm run dev\"",
-		"format": "prettier --write 'client/**/*.{js,jsx,ts,tsx}' 'server/**/*.{js,jsx,ts,tsx}'",
-		"install": "cd server && npm i && cd ../client && npm i",
-		"outdated": "cd server && npm outdated && cd ../client && npm outdated",
-		"update": "cd server && npm update && cd ../client && npm update",
-		"start": "node server --ignore client"
-	},
-	"keywords": [],
-	"author": "",
-	"license": "ISC",
-	"devDependencies": {
-		"concurrently": "^8.2.2",
-		"prettier": "^3.3.3"
-	}
+    "name": "memable",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "build": "cd client && npm run build",
+        "dev": "concurrently \"cd server && npm run watch\" \"cd client && npm run dev\"",
+        "format": "prettier --write 'client/**/*.{js,jsx,ts,tsx}' 'server/**/*.{js,jsx,ts,tsx}'",
+        "install": "cd server && npm i && cd ../client && npm i",
+        "outdated": "cd server && npm outdated && cd ../client && npm outdated",
+        "update": "cd server && npm update && cd ../client && npm update",
+        "start": "node server --ignore client"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "devDependencies": {
+        "concurrently": "^8.2.2",
+        "nodemon": "^3.1.4",
+        "prettier": "^3.3.3"
+    }
 }

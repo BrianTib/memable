@@ -1,6 +1,6 @@
 #pepeHiding {
     position: absolute;
-    top: -75px;
+    top: -60px;
     left: 0;
     width: 200px;
     height: 200px;
@@ -15,5 +15,5 @@
 }
 
 #pepeHiding:hover {
-    transform: translateY(-50px);
+    transform: translateY(-60px);
 }

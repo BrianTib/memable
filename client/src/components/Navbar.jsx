@@ -1,5 +1,7 @@
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
+
+import Auth from '../../util/auth';
 
 function LinkItem({ to, text, isActive }) {
     const active = isActive(to);
@@ -15,7 +17,7 @@ function LinkItem({ to, text, isActive }) {
     );
 }
 
-function ButtonItem({ text, theme, to }) {
+function ButtonItem({ text, theme, to, onClick, navigator: navigate }) {
     const themeClass =
         theme === 'light'
             ? 'bg-white text-black border-2 border-gray-500'
@@ -24,17 +26,23 @@ function ButtonItem({ text, theme, to }) {
               : 'bg-black text-white';
 
     return (
-        <Link
-            to={to}
+        <button
+            onClick={e => {
+                if (navigate && to) {
+                    navigate(to);
+                } else if (onClick) {
+                    onClick(e);
+                }
+            }}
             className={`block py-2 px-4 md:px-8 xl:px-12 ${themeClass} rounded-lg w-full md:w-auto`}>
             {text}
-        </Link>
+        </button>
     );
 }
 
 export default function Navbar() {
-    const [isLoggedIn, setIsLoggedIn] = useState(false);
     const location = useLocation();
+    const navigate = useNavigate();
 
     const isActive = path => {
         return location.pathname === path;
@@ -72,18 +80,31 @@ export default function Navbar() {
                 </button>
                 <div className="hidden w-full lg:block lg:w-auto" id="navbar-default">
                     <ul className="font-medium flex flex-col p-0 border border-gray-100 space-y-4 md:space-y-0 md:flex-row lg:gap-2 xl:gap-8 rtl:flex-row-reverse">
-                        {isLoggedIn && (
-                            <LinkItem isActive={isActive} to="/profile" text="John Doe" />
+                        {Auth.isLoggedIn() && (
+                            <LinkItem
+                                isActive={isActive}
+                                to="/profile"
+                                text={Auth.getProfile().username}
+                            />
                         )}
                         <LinkItem isActive={isActive} to="/how-to-play" text="How to play" />
                         <LinkItem isActive={isActive} to="/leaderboards" text="Leaderboard" />
                         <LinkItem isActive={isActive} to="/top-memes" text="Top Memes" />
-                        {isLoggedIn ? (
-                            <ButtonItem text="Logout" theme="danger" />
+                        {Auth.isLoggedIn() ? (
+                            <ButtonItem
+                                text="Logout"
+                                theme="danger"
+                                onClick={() => Auth.logout()}
+                            />
                         ) : (
                             <>
-                                <ButtonItem to="/login" text="Login" />
-                                <ButtonItem to="/login" text="Sign Up" theme="light" />
+                                <ButtonItem to="/login" navigator={navigate} text="Login" />
+                                <ButtonItem
+                                    to="/login"
+                                    navigator={navigate}
+                                    text="Sign Up"
+                                    theme="light"
+                                />
                             </>
                         )}
                     </ul>
