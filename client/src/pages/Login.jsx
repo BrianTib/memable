@@ -1,10 +1,10 @@
-import { useState } from 'react';
+import { SIGN_UP, LOGIN } from '../../util/mutations';
 import { useMutation } from '@apollo/client';
-import { useMutation as useTanstackMutation } from '@tanstack/react-query';
-import { SIGN_UP } from '../../util/mutations';
+import { useState } from 'react';
 import Loading from '../components/Loading';
-import Error from '../components/Error';
 import styles from './Login.module.css';
+
+import Auth from '../../util/auth';
 
 function SubmitButton({ children }) {
     return (
@@ -37,6 +37,7 @@ export default function Login() {
 
     // This is the graphql mutation hook
     const [signUp, signUpMutation] = useMutation(SIGN_UP);
+    const [login, loginMutation] = useMutation(LOGIN);
 
     const clearForm = () => {
         setFormErrorMessage('');
@@ -53,13 +54,21 @@ export default function Login() {
             return;
         }
 
-        if (isLoginAction) {
-            // Login
-            // loginMutation.mutate(formData);
-            return;
-        }
-
         try {
+            if (isLoginAction) {
+                // Login
+                const { data } = await login({
+                    variables: {
+                        username: formData.username.trim().toLowerCase(),
+                        password: formData.password,
+                    },
+                });
+
+                console.log('login data', data);
+                Auth.login(data.login.token);
+                return;
+            }
+
             // Sign up
             if (formData.password.length < 6) {
                 setFormErrorMessage('Password must be at least 6 characters long');
@@ -73,7 +82,7 @@ export default function Login() {
                 },
             });
 
-            console.log({ data });
+            Auth.login(data.signUp.token);
         } catch (e) {
             if (e.message) {
                 setFormErrorMessage(e.message);
@@ -81,13 +90,8 @@ export default function Login() {
         }
     };
 
-    if (signUpMutation.loading) {
+    if (signUpMutation.loading || loginMutation.loading) {
         return <Loading />;
-    }
-
-    if (signUpMutation.data) {
-        // Redirect to the home page
-        window.location.href = '/';
     }
 
     return (
@@ -161,7 +165,7 @@ export default function Login() {
                             required
                         />
                         <small className="text-[#55883A] text-xs">
-                            Your password should be at least 6 characters in length
+                            Your password should be at least 6 characters long
                         </small>
                     </label>
 
@@ -170,7 +174,6 @@ export default function Login() {
                             <>
                                 <SubmitButton>Login</SubmitButton>
                                 <ToggleButton
-                                    type="button"
                                     onClick={() => {
                                         clearForm();
                                         setIsLoginAction(false);
@@ -181,7 +184,6 @@ export default function Login() {
                         ) : (
                             <>
                                 <ToggleButton
-                                    type="button"
                                     onClick={() => {
                                         clearForm();
                                         setIsLoginAction(true);

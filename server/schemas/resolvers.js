@@ -17,7 +17,10 @@ const resolvers = {
     },
     Mutation: {
         login: async (_, { username, password }) => {
-            const user = await User.findOne({ username });
+            console.log('Login', { username, password });
+
+            const user = await User.findWithPassword({ username });
+
             if (!user || !(await user.isCorrectPassword(password))) {
                 throw new Error('Invalid credentials');
             }
@@ -31,7 +34,7 @@ const resolvers = {
             return { token, user };
         },
         signUp: async (_, { username, password }) => {
-            console.log('signUp', { username, password, JWT_SECRET: process.env.JWT_SECRET });
+            console.log('signUp', { username, password });
             const existingUser = await User.findOne({ username });
             if (existingUser) {
                 throw new Error('That username is not available');
