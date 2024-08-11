@@ -1,14 +1,9 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { prettyNumber } from '../../util/util';
+import InstructionCard from '../components/InstructionCard';
 
 export default function Page() {
-    const [topCount, setTopCount] = useState(10); // Default to Top 10
-
-    const handleTopCountChange = event => {
-        setTopCount(parseInt(event.target.value));
-    };
-
     return (
         <div>
             <section className="bg-[#55883A] relative py-10">
@@ -25,6 +20,10 @@ export default function Page() {
 
                 <div className="flex flex-col gap-5 w-full items-center md:pt-24 pt-16 px-5">
                     <h3 className="text-white text-4xl md:text-5xl text-center">How To Play</h3>
+                </div>
+
+                <div>
+                    <InstructionCard />
                 </div>
 
             </section>
