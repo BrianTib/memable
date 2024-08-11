@@ -6,23 +6,29 @@ const FeatureInstructions = () => {
     const features = [
         {
             text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia nobis sint beatae delectus eum mollitia repudiandae officiis earum ab nesciunt fugit natus, ea quo omnis odio, eaque iste. Velit, tempore.',
-            image: 'Join a session with friends or create your own session.',
+            image: '/images/placeholder.gif',
         },
         {
-            title: 'Get a prompt',
-            description: 'Each round you will get a random prompt to find the perfect GIF for',
-            icon: IconText,
+            text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia nobis sint beatae delectus eum mollitia repudiandae officiis earum ab nesciunt fugit natus, ea quo omnis odio, eaque iste. Velit, tempore.',
+            image: '/images/placeholder.gif',
         },
         {
-            title: 'Find a funny GIF',
-            description: 'Use the text prompt to find a funny GIF that suits the prompt',
-            icon: IconGIF,
+            text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia nobis sint beatae delectus eum mollitia repudiandae officiis earum ab nesciunt fugit natus, ea quo omnis odio, eaque iste. Velit, tempore.',
+            image: '/images/placeholder.gif',
         },
         {
-            title: 'Vote for a winner',
-            description: "Give scores to your friend's memes and find out who's the funniest",
-            icon: IconTrophy,
+            text: 'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia nobis sint beatae delectus eum mollitia repudiandae officiis earum ab nesciunt fugit natus, ea quo omnis odio, eaque iste. Velit, tempore.',
+            image: '/images/placeholder.gif',
         },
     ];
+
+    return (
+        <ul className="flex flex-col items-center justify-center md:flex-wrap md:flex-row md:mx-auto md:w-fit gap-5">
+            {features.map((feature, idx) => (
+                <InstructionCard key={idx} text={feature.text} image={feature.image} />
+            ))}
+        </ul>
+    );
+};
 
 export default FeatureInstructions;
