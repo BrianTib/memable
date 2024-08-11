@@ -23,11 +23,13 @@ const FeatureInstructions = () => {
     ];
 
     return (
-        <ul className="flex flex-col items-center justify-center md:flex-wrap md:flex-row md:mx-auto md:w-fit gap-5">
-            {features.map((feature, idx) => (
-                <InstructionCard key={idx} text={feature.text} image={feature.image} />
-            ))}
-        </ul>
+        <div>
+            <ul className="flex flex-col items-center justify-center md:flex-wrap md:flex-row md:mx-auto md:w-fit gap-5">
+                {features.map((feature, idx) => (
+                    <InstructionCard key={idx} text={feature.text} image={feature.image} />
+                ))}
+            </ul>
+        </div>
     );
 };
 

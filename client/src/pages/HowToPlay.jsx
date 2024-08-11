@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { prettyNumber } from '../../util/util';
-import InstructionCard from '../components/InstructionCard';
+import FeatureInstructions from '../components/FeatureInstructions';
 
 export default function Page() {
     return (
@@ -23,7 +23,7 @@ export default function Page() {
                 </div>
 
                 <div>
-                    <InstructionCard />
+                    <FeatureInstructions />
                 </div>
 
             </section>
