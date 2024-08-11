@@ -1,12 +1,14 @@
 const { Schema, model } = require('mongoose');
 const bcrypt = require('bcrypt');
+const Session = require('./Session');
+
 
 const validateUsername = username =>
     /^[a-z0-9_]+$/.test(username) && username === username.toLowerCase();
 
 const userSchema = new Schema({
     username: {
-        type: String,
+        type: Schema.Types.String,
         required: true,
         trim: true,
         unique: true, // Ensures the username is unique
@@ -15,12 +17,30 @@ const userSchema = new Schema({
             'Username must be alphanumeric and in lowercase with no spaces.',
         ],
     },
+
+    email: {
+        type: Schema.Types.String,
+        required: true,
+        minlength: 12,
+        trim: true,
+        unique: true,
+        validate: [
+            'Email must be in the format of an email with @ and top level domain (ex: .com, .net)'
+        ]
+
+    },
+
     password: {
-        type: String,
+        type: Schema.Types.String,
         required: true,
         minlength: 5,
         select: false, // Exclude password from query results by default
     },
+    session: {
+        type: Session,
+        required: false
+    }
+
 });
 
 userSchema.pre('save', async function (next) {

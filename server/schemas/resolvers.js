@@ -66,6 +66,7 @@ const resolvers = {
             return true;
         },
         createSession: async (_, { isOnGoing, rounds }) => {
+            console.log(isOnGoing, rounds)
             const session = new Session({ isOnGoing, rounds });
             await session.save();
             return session;

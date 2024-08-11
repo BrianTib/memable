@@ -32,7 +32,9 @@ const typeDefs = `
     type User {
         _id: ID!
         username: String!
-        password: String
+        email: String!
+        password: String!
+        session: Session
     }
 
     # Session Type
