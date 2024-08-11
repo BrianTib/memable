@@ -25,13 +25,11 @@ export default function Page() {
 
                 <div className="flex flex-col gap-5 w-full items-center md:pt-24 pt-16 px-5">
                     <h3 className="text-white text-4xl md:text-5xl text-center">How To Play</h3>
-                                <p className="text-white text-center leading-6">
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Officia nobis sint beatae delectus eum mollitia repudiandae officiis earum ab nesciunt fugit natus, ea quo omnis odio, eaque iste. Velit, tempore.
-                                </p>
-                               
-                                <img className="h-auto max-w-full rounded-lg shadow-xl dark:shadow-gray-800" src="/images/placeholder.gif" alt="Placeholder" />
                 </div>
+
             </section>
         </div>
     );
 }
+
+
