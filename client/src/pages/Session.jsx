@@ -1,5 +1,13 @@
-import React from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { useState } from 'react';
+import { useParams } from 'react-router-dom';
+import { useThrottle } from '../hooks/useThrottle';
+import { useQuery } from '@apollo/client';
+import { QUERY_CURRENT_ROUND } from '../../util/queries';
+import Loading from '../components/Loading';
+import Error from '../components/Error';
+import axios from 'axios';
+
+import Auth from '../../util/auth';
 
 function PlayerCard({ username, score }) {
     return (
@@ -17,13 +25,65 @@ function PlayerCard({ username, score }) {
         </div>
     );
 }
+function GiphySearchMosaic({ results, setSelectedGif }) {
+    return (
+        <div className="w-fit mb-2 flex justify-center overflow-x-auto md:flex-wrap gap-4">
+            {results.map((r, i) => (
+                <button
+                    key={r.id}
+                    className="w-32 h-32 bg-gray-300 rounded-xl shadow-lg overflow-hidden transition-transform duration-200 hover:ring-2 hover:ring-[#55883A] hover:ring-offset-2 hover:scale-110"
+                    onClick={() => setSelectedGif(r)}>
+                    <img
+                        className="w-full h-full object-cover"
+                        alt={r.title}
+                        src={r.images.original.url}
+                    />
+                </button>
+            ))}
+        </div>
+    );
+}
 
 export default function Session() {
+    const [giphyResults, setGiphyResults] = useState([]);
+    const [promptInput, setPromptInput] = useState('');
+    const [selectedGif, setSelectedGif] = useState(null);
     const { sessionId } = useParams();
 
+    const throttledGIFSearch = useThrottle(async () => {
+        console.log('Searching for:', promptInput);
+        const { data } = await axios.get(
+            `https://api.giphy.com/v1/gifs/search?q=${promptInput}$&api_key=zGTBO65XtIkTWFiBcgVCxJX7x8FveHfA&limit=20`,
+        );
+        setGiphyResults(data?.data);
+    }, 2000);
+
+    const handleSetSelectedGIF = gif => {
+        setSelectedGif(gif);
+        setPromptInput('');
+        setGiphyResults([]);
+    };
+
+    const { loading: roundDataLoading, data: { currentRound: roundData } = {} } = useQuery(
+        QUERY_CURRENT_ROUND,
+        {
+            variables: { id: sessionId },
+        },
+    );
+
+    if (roundDataLoading) {
+        return <Loading />;
+    }
+
+    if (!roundData) {
+        return <Error message="Unable to load the round data" />;
+    }
+
+    // console.log(roundData);
+
     return (
-        <div className="relative bg-gray-200 min-h-full flex flex-col px-4 py-4">
-            <secion className="flex w-full flex-wrap justify-between h-fit">
+        <div className="relative bg-gray-200 min-h-full flex flex-col px-4 py-4 gap-4">
+            <section className="flex w-full flex-wrap justify-between h-fit">
                 <div className="flex items-center gap-4">
                     <button className="bg-white p-2 rounded-full shadow-lg">
                         <svg
@@ -43,36 +103,67 @@ export default function Session() {
                         Leave
                     </button>
                 </div>
-                <div className="hidden md:flex gap-2 py-3 overflow-auto">
-                    <PlayerCard username="Player 1" score={0} />
-                    <PlayerCard username="Player 2" score={0} />
-                    <PlayerCard username="Player 3" score={0} />
-                    <PlayerCard username="Player 4" score={0} />
-                </div>
-            </secion>
+
+                {roundData.players.length > 0 && (
+                    <div className="hidden md:flex gap-2 py-3 overflow-auto">
+                        {roundData.players.map(player => {
+                            const score =
+                                roundData.responses.find(
+                                    response => response.player._id.toString() === player._id,
+                                )?.totalScore || 0;
+
+                            return (
+                                <PlayerCard
+                                    key={player._id}
+                                    username={player.username}
+                                    score={score}
+                                />
+                            );
+                        })}
+                    </div>
+                )}
+            </section>
             <section className="h-full flex flex-grow items-center justify-center">
-                <div className="relative bg-white flex flex-col w-fit md:w-3/12 font-bold text-center gap-1 px-8 py-12 rounded-lg shadow-lg">
+                <div className="relative bg-white flex flex-col items-center w-fit md:w-3/12 font-bold text-center gap-1 px-8 py-12 rounded-lg shadow-lg">
                     <h6 className="absolute top-4 left-4 text-gray-500">Round 1/5</h6>
                     <h5 className="text-gray-700 text-2xl">
                         Time Left: <span className="text-red-500 font-bold">0:50</span>
                     </h5>
                     <h4 className="text-3xl text-[#55883A]">Prompt</h4>
-                    <p className="text-gray-500 mt-4">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit ab illo optio
-                        blanditiis quos voluptates, quasi nam ad magni quae
-                    </p>
+                    <p className="text-gray-500 md:text-lg mt-4">{roundData?.prompt.text}</p>
+                    {selectedGif && (
+                        <>
+                            <img
+                                className="w-64 h-64 object-cover mt-4 rounded-lg mb-4"
+                                src={selectedGif.images.original.url}
+                                alt={selectedGif.title}
+                            />
+                            <button className="bg-[#55883A] w-fit text-white px-8 py-3 rounded-lg shadow-lg">
+                                Submit
+                            </button>
+                        </>
+                    )}
                 </div>
             </section>
             <section className="md:px-12">
+                {promptInput && giphyResults.length > 0 && (
+                    <GiphySearchMosaic
+                        results={giphyResults}
+                        setSelectedGif={handleSetSelectedGIF}
+                    />
+                )}
+
                 <form className="flex gap-4">
                     <input
-                        className="bg-white w-full py-2 text-lg px-4 rounded-lg shadow-lg border-none font-bold"
+                        className="bg-white w-full py-2 text-lg px-4 rounded-lg shadow-lg font-bold border-none focus:ring-2 focus:ring-[#55883A] focus:text-[#55883A]"
                         type="text"
+                        onChange={e => {
+                            setPromptInput(e.target.value);
+                            throttledGIFSearch();
+                        }}
+                        value={promptInput}
                         placeholder="Search for a GIF"
                     />
-                    <button className="bg-[#55883A] text-white px-8 py-3 rounded-lg shadow-lg">
-                        Submit
-                    </button>
                 </form>
             </section>
         </div>

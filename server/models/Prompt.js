@@ -15,6 +15,12 @@ const promptSchema = new Schema(
     },
 );
 
+promptSchema.statics.getRandomPrompt = async function () {
+    const count = await this.countDocuments();
+    const randomIndex = Math.floor(Math.random() * count);
+    return this.findOne().skip(randomIndex);
+};
+
 const Prompt = model('Prompt', promptSchema);
 
 module.exports = Prompt;
