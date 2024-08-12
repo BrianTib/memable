@@ -48,3 +48,5 @@ const TopMemes = () => {
 {/* Meme Grid */}
 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
   {/* Placeholder for dynamic content */}
+  <div className="bg-gray-100 p-5 rounded shadow-md">
+            <img src="meme1.png" alt="Meme 1" className="w-full h-48 object-cover rounded mb-4" />
