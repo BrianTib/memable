@@ -50,13 +50,10 @@ const resolvers = {
                     expiresIn: expiration,
                 },
             );
-
-            console.log({ token, user });
-
             return { token, user };
         },
         createSession: async (_, __, ctx) => {
-            console.log(ctx);
+            console.log(ctx.user);
             if (!ctx.user || !ctx.user.id) throw new Error('Not authenticated');
 
             // Get a random prompt
