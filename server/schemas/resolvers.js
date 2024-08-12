@@ -55,6 +55,20 @@ const resolvers = {
 
             return { token, user };
         },
+        createSession: async (_, __, ctx) => {
+            console.log(ctx);
+            if (!ctx.user || !ctx.user.id) throw new Error('Not authenticated');
+
+            // There should be some code here to
+
+            const session = new Session({
+                isOnGoing: true,
+                owner: ctx.user.id,
+                rounds: [],
+            });
+            await session.save();
+            return session;
+        },
         updateUser: async (_, { id, username, password }) => {
             const updates = {};
             if (username) updates.username = username;
@@ -65,11 +79,7 @@ const resolvers = {
             await User.findByIdAndDelete(id);
             return true;
         },
-        createSession: async (_, { isOnGoing, rounds }) => {
-            const session = new Session({ isOnGoing, rounds });
-            await session.save();
-            return session;
-        },
+
         updateSession: async (_, { id, isOnGoing, rounds }) => {
             return Session.findByIdAndUpdate(id, { isOnGoing, rounds }, { new: true });
         },
