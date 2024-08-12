@@ -5,6 +5,7 @@ import Root from './Root.jsx';
 import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
 import Leaderboards from './pages/Leaderboards.jsx';
+import TopMemes from './pages/TopMemes.jsx'; 
 import './global.css';
 
 const router = createBrowserRouter([
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
             {
                 path: '/leaderboards',
                 element: <Leaderboards />,
+            },
+            {
+                path: '/top-memes', // Add this line to handle /top-memes path
+                element: <TopMemes />,
             },
         ],
     },
