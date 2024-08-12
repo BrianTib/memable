@@ -9,12 +9,12 @@ const TopMemes = () => {
     day: [
       { id: 1, title: 'When your friend suggests a crazy idea, and you’re actually considering it.', votes: 500, image: 'meme1.png' },
       { id: 2, title: 'Day Meme 2', votes: 350, image: 'meme2.png' },
-      { id: 3, title: 'Day Meme 3', votes: 400, image: 'meme3.png' }, // New meme added
+      { id: 3, title: 'When your favorite song comes on, and you’re in public, trying not to dance.', votes: 400, image: 'meme3.png' }, // New meme added
     ],
     week: [
-      { id: 4, title: 'Week Meme 1', votes: 800, image: 'meme4.png' },
+      { id: 4, title: 'When you walk into a spider web and start doing ninja moves in public.', votes: 800, image: 'meme4.png' },
       { id: 5, title: 'When you try to take a cute selfie, but the camera flips to front-facing.', votes: 650, image: 'meme5.png' },
-      { id: 6, title: 'Week Meme 3', votes: 700, image: 'meme6.png' }, // New meme added
+      { id: 6, title: 'When you’re hungry, but too lazy to cook, so you just stare into the fridge.', votes: 700, image: 'meme6.png' }, // New meme added
     ],
     month: [
       { id: 7, title: 'When someone spoils the ending of a movie you were planning to watch.', votes: 1200, image: 'meme7.png' },
