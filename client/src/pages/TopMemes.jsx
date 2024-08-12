@@ -69,3 +69,8 @@ const TopMemes = () => {
           <a href="#" className="hover:underline">Terms of Service</a>
         </p>
       </footer>
+       </div>
+    );
+  };
+  
+  export default TopMemes;
