@@ -43,15 +43,38 @@ export default function Session() {
                         Leave
                     </button>
                 </div>
-                <div className="flex gap-2 py-3 overflow-auto">
+                <div className="hidden md:flex gap-2 py-3 overflow-auto">
                     <PlayerCard username="Player 1" score={0} />
                     <PlayerCard username="Player 2" score={0} />
                     <PlayerCard username="Player 3" score={0} />
                     <PlayerCard username="Player 4" score={0} />
                 </div>
             </secion>
-            <section className="flex items-center justify-center"></section>
-            <section></section>
+            <section className="h-full flex flex-grow items-center justify-center">
+                <div className="relative bg-white flex flex-col w-fit md:w-3/12 font-bold text-center gap-1 px-8 py-12 rounded-lg shadow-lg">
+                    <h6 className="absolute top-4 left-4 text-gray-500">Round 1/5</h6>
+                    <h5 className="text-gray-700 text-2xl">
+                        Time Left: <span className="text-red-500 font-bold">0:50</span>
+                    </h5>
+                    <h4 className="text-3xl text-[#55883A]">Prompt</h4>
+                    <p className="text-gray-500 mt-4">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit ab illo optio
+                        blanditiis quos voluptates, quasi nam ad magni quae
+                    </p>
+                </div>
+            </section>
+            <section className="md:px-12">
+                <form className="flex gap-4">
+                    <input
+                        className="bg-white w-full py-2 text-lg px-4 rounded-lg shadow-lg border-none font-bold"
+                        type="text"
+                        placeholder="Search for a GIF"
+                    />
+                    <button className="bg-[#55883A] text-white px-8 py-3 rounded-lg shadow-lg">
+                        Submit
+                    </button>
+                </form>
+            </section>
         </div>
     );
 }
