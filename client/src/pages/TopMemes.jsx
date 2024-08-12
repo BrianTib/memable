@@ -31,3 +31,9 @@ const TopMemes = () => {
           >
             Week
           </button>
+          <button 
+            className={`px-4 py-2 mx-2 rounded ${filter === 'month' ? 'bg-green-500 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
+            onClick={() => handleFilterChange('month')}
+          >
+            Month
+          </button>
