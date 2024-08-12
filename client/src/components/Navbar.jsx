@@ -1,5 +1,6 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { CREATE_SESSION } from '../../util/mutations';
+import { useMutation } from '@apollo/client';
 
 import Auth from '../../util/auth';
 
@@ -44,8 +45,20 @@ export default function Navbar() {
     const location = useLocation();
     const navigate = useNavigate();
 
+    const [createSessionMutation] = useMutation(CREATE_SESSION);
+
     const isActive = path => {
         return location.pathname === path;
+    };
+
+    const createSession = async () => {
+        try {
+            const { data } = await createSessionMutation();
+            console.log(data);
+            navigate(`/session/${data.createSession._id}`);
+        } catch (err) {
+            console.error(err);
+        }
     };
 
     return (
@@ -92,11 +105,7 @@ export default function Navbar() {
                         <LinkItem isActive={isActive} to="/top-memes" text="Top Memes" />
                         {Auth.isLoggedIn() ? (
                             <>
-                                <ButtonItem
-                                    text="Create Session"
-                                    to="/session/1"
-                                    navigator={navigate}
-                                />
+                                <ButtonItem text="Create Session" onClick={createSession} />
                                 <ButtonItem
                                     text="Logout"
                                     theme="danger"

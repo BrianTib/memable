@@ -1,6 +1,6 @@
 const { User, Session, Prompt } = require('../models');
 const jwt = require('jsonwebtoken');
-const expiration = '2h';
+const expiration = '6h';
 
 const resolvers = {
     Query: {
@@ -12,6 +12,27 @@ const resolvers = {
         },
         session: async (_, { id }) => Session.findById(id),
         sessions: async () => Session.find(),
+        currentRound: async (_, { id }, ctx) => {
+            if (!ctx.user || !ctx.user.id) throw new Error('Not authenticated');
+            const session = await Session.findById(id);
+
+            if (!session) throw new Error('No session found');
+
+            await session.populate({
+                path: 'rounds',
+                populate: [
+                    { path: 'prompt' },
+                    { path: 'players', select: 'username _id' },
+                    { path: 'responses.player', select: 'username _id' },
+                ],
+            });
+
+            if (!session.currentRound?.players.some(p => p._id.toString() === ctx.user.id)) {
+                throw new Error('You are not a player in this round');
+            }
+
+            return session.currentRound;
+        },
         prompt: async (_, { id }) => Prompt.findById(id),
         prompts: async () => Prompt.find(),
     },
@@ -50,10 +71,38 @@ const resolvers = {
                     expiresIn: expiration,
                 },
             );
-
-            console.log({ token, user });
-
             return { token, user };
+        },
+        createSession: async (_, __, ctx) => {
+            console.log(ctx.user);
+            if (!ctx.user || !ctx.user.id) throw new Error('Not authenticated');
+
+            try {
+                // Get a random prompt
+                const prompt = await Prompt.getRandomPrompt();
+                if (!prompt) {
+                    throw new Error('Failed to retrieve a random prompt');
+                }
+
+                // Create a new session with one round
+                const session = await new Session({
+                    isOnGoing: true,
+                    owner: ctx.user.id,
+                    rounds: [
+                        {
+                            prompt: prompt.id,
+                            players: [ctx.user.id],
+                            responses: [],
+                        },
+                    ],
+                }).save();
+
+                session.populate('rounds');
+                return session;
+            } catch (error) {
+                console.error('Error creating session:', error);
+                throw new Error('Failed to create session');
+            }
         },
         updateUser: async (_, { id, username, password }) => {
             const updates = {};
@@ -65,11 +114,7 @@ const resolvers = {
             await User.findByIdAndDelete(id);
             return true;
         },
-        createSession: async (_, { isOnGoing, rounds }) => {
-            const session = new Session({ isOnGoing, rounds });
-            await session.save();
-            return session;
-        },
+
         updateSession: async (_, { id, isOnGoing, rounds }) => {
             return Session.findByIdAndUpdate(id, { isOnGoing, rounds }, { new: true });
         },
