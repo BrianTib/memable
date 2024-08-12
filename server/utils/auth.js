@@ -25,7 +25,8 @@ module.exports = {
         },
         }),
     signToken: function ({ username, _id }) {
-        const 
-    }
+        const session= { username, _id };
+    return jwt.sign({ data: session }, secret, { expiresIn: expiration });
+  },
 }
 module.exports = authMiddleware;
