@@ -17,3 +17,11 @@ const TopMemes = () => {
         <p className="text-center text-lg text-gray-600 mb-10">
           Explore the funniest memes from today, this week, this month, and this year!
         </p>
+         {/* Filters for Day, Week, Month, Year */}
+         <div className="flex justify-center mb-8">
+          <button 
+            className={`px-4 py-2 mx-2 rounded ${filter === 'day' ? 'bg-green-500 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
+            onClick={() => handleFilterChange('day')}
+          >
+            Day
+          </button>
