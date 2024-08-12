@@ -11,7 +11,7 @@ const typeDefs = `
 
     type Mutation {
         createPrompt(text: String, imageUrl: String): Prompt
-        createSession(isOnGoing: Boolean, rounds: [ID]): Session
+        createSession(): ID
         deletePrompt(id: ID!): Boolean
         deleteSession(id: ID!): Boolean
         deleteUser(id: ID!): Boolean
