@@ -48,31 +48,39 @@ const TopMemes = () => {
 
         {/* Filters for Day, Week, Month, Year */}
         <div className="flex justify-center mb-8">
-          <button
-            className={`px-4 py-2 mx-2 rounded ${filter === 'day' ? 'bg-green-500 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
-            onClick={() => handleFilterChange('day')}
-          >
-            Day
-          </button>
-          <button
-            className={`px-4 py-2 mx-2 rounded ${filter === 'week' ? 'bg-green-500 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
-            onClick={() => handleFilterChange('week')}
-          >
-            Week
-          </button>
-          <button
-            className={`px-4 py-2 mx-2 rounded ${filter === 'month' ? 'bg-green-500 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
-            onClick={() => handleFilterChange('month')}
-          >
-            Month
-          </button>
-          <button
-            className={`px-4 py-2 mx-2 rounded ${filter === 'year' ? 'bg-green-500 text-white' : 'bg-gray-200 text-black hover:bg-gray-300'}`}
-            onClick={() => handleFilterChange('year')}
-          >
-            Year
-          </button>
-        </div>
+  <button
+    className={`px-4 py-2 mx-2 rounded-lg font-bold border border-transparent ${
+      filter === 'day' ? 'bg-[rgb(85,136,58)] text-white' : 'bg-gray-200 text-black hover:bg-gray-300'
+    }`}
+    onClick={() => handleFilterChange('day')}
+  >
+    Day
+  </button>
+  <button
+    className={`px-4 py-2 mx-2 rounded-lg font-bold border border-transparent ${
+      filter === 'week' ? 'bg-[rgb(85,136,58)] text-white' : 'bg-gray-200 text-black hover:bg-gray-300'
+    }`}
+    onClick={() => handleFilterChange('week')}
+  >
+    Week
+  </button>
+  <button
+    className={`px-4 py-2 mx-2 rounded-lg font-bold border border-transparent ${
+      filter === 'month' ? 'bg-[rgb(85,136,58)] text-white' : 'bg-gray-200 text-black hover:bg-gray-300'
+    }`}
+    onClick={() => handleFilterChange('month')}
+  >
+    Month
+  </button>
+  <button
+    className={`px-4 py-2 mx-2 rounded-lg font-bold border border-transparent ${
+      filter === 'year' ? 'bg-[rgb(85,136,58)] text-white' : 'bg-gray-200 text-black hover:bg-gray-300'
+    }`}
+    onClick={() => handleFilterChange('year')}
+  >
+    Year
+  </button>
+</div>
 
         {/* Meme Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -86,14 +94,6 @@ const TopMemes = () => {
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="p-5 bg-gray-800 text-white text-center">
-        <p>&copy; 2024 Memable. All rights reserved.</p>
-        <p>
-          <a href="#" className="hover:underline">Privacy Policy</a> |
-          <a href="#" className="hover:underline">Terms of Service</a>
-        </p>
-      </footer>
     </div>
   );
 };
