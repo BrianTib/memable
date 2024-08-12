@@ -2,15 +2,36 @@ import React, { useState } from 'react';
 
 const TopMemes = () => {
   const [filter, setFilter] = useState('day');
+  const [memes, setMemes] = useState([]);
 
+  // Example meme data (In a real app, this data would come from an API or a database)
+  const memeData = {
+    day: [
+      { id: 1, title: 'Day Meme 1', votes: 500, image: 'meme1.png' },
+      { id: 2, title: 'Day Meme 2', votes: 350, image: 'meme2.png' },
+    ],
+    week: [
+      { id: 3, title: 'Week Meme 1', votes: 800, image: 'meme3.png' },
+      { id: 4, title: 'Week Meme 2', votes: 650, image: 'meme4.png' },
+    ],
+    month: [
+      { id: 5, title: 'Month Meme 1', votes: 1200, image: 'meme5.png' },
+      { id: 6, title: 'Month Meme 2', votes: 950, image: 'meme6.png' },
+    ],
+    year: [
+      { id: 7, title: 'Year Meme 1', votes: 2000, image: 'meme7.png' },
+      { id: 8, title: 'Year Meme 2', votes: 1800, image: 'meme8.png' },
+    ],
+  };
+
+  // Update memes when filter changes
   const handleFilterChange = (newFilter) => {
     setFilter(newFilter);
-    // You can also add logic here to fetch or filter the memes based on the selected filter
+    setMemes(memeData[newFilter]);
   };
 
   return (
     <div className="min-h-screen bg-white text-gray-900">
-
       {/* Main Content */}
       <main className="px-5 py-10">
         <h2 className="text-3xl font-bold text-center">Top Memes</h2>
@@ -48,18 +69,13 @@ const TopMemes = () => {
 
         {/* Meme Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {/* Placeholder for dynamic content */}
-          <div className="bg-gray-100 p-5 rounded shadow-md">
-            <img src="meme1.png" alt="Meme 1" className="w-full h-48 object-cover rounded mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Meme Title 1</h3>
-            <p className="text-gray-600">500 Votes</p>
-          </div>
-          <div className="bg-gray-100 p-5 rounded shadow-md">
-            <img src="meme2.png" alt="Meme 2" className="w-full h-48 object-cover rounded mb-4" />
-            <h3 className="text-xl font-semibold mb-2">Meme Title 2</h3>
-            <p className="text-gray-600">350 Votes</p>
-          </div>
-          {/* Add more meme cards here */}
+          {memes.map((meme) => (
+            <div key={meme.id} className="bg-gray-100 p-5 rounded shadow-md">
+              <img src={meme.image} alt={meme.title} className="w-full h-48 object-cover rounded mb-4" />
+              <h3 className="text-xl font-semibold mb-2">{meme.title}</h3>
+              <p className="text-gray-600">{meme.votes} Votes</p>
+            </div>
+          ))}
         </div>
       </main>
 
