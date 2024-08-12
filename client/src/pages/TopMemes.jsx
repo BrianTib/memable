@@ -40,7 +40,7 @@ const TopMemes = () => {
   return (
     <div>
       <section className="bg-[#55883A] relative py-10">
-                    <svg
+                  <svg
                     viewBox="0 0 1440 58"
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
@@ -53,7 +53,7 @@ const TopMemes = () => {
     <div className="flex flex-col min-h-screen text-white">
       {/* Main Content */}
       <main className="flex-grow px-5 py-10">
-        <h2 className="text-3xl font-bold text-center">Top Memes</h2>
+        <h2 className="text-4xl md:text-5xl text-center">Top Memes</h2>
         <p className="text-center text-lg text-white mb-10">
           Explore the funniest memes from today, this week, this month, and this year!
         </p>
