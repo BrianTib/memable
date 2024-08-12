@@ -1,6 +1,6 @@
 const { User, Session, Prompt } = require('../models');
 const jwt = require('jsonwebtoken');
-const expiration = '2h';
+const expiration = '6h';
 
 const resolvers = {
     Query: {
@@ -59,12 +59,19 @@ const resolvers = {
             console.log(ctx);
             if (!ctx.user || !ctx.user.id) throw new Error('Not authenticated');
 
-            // There should be some code here to
+            // Get a random prompt
+            const prompt = await Prompt.getRandomPrompt();
 
             const session = new Session({
                 isOnGoing: true,
                 owner: ctx.user.id,
-                rounds: [],
+                rounds: [
+                    {
+                        prompt: prompt.id,
+                        players: [ctx.user.id],
+                        responses: [],
+                    },
+                ],
             });
             await session.save();
             return session;

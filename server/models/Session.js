@@ -29,7 +29,7 @@ const playerResponseSchema = new Schema(
 // Round schema
 const roundSchema = new Schema(
     {
-        prompt: { type: Schema.Types.ObjectId, ref: 'String', required: true },
+        prompt: { type: Schema.Types.ObjectId, ref: 'Prompt', required: true },
         players: [{ type: Schema.Types.ObjectId, ref: 'User' }],
         responses: [playerResponseSchema],
         totalRoundScore: {

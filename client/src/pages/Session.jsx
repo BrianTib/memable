@@ -1,5 +1,6 @@
-import React from 'react';
+import { useState } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
+import { useDebounce } from '../hooks/useDebounce';
 
 function PlayerCard({ username, score }) {
     return (
@@ -20,6 +21,7 @@ function PlayerCard({ username, score }) {
 
 export default function Session() {
     const { sessionId } = useParams();
+    const [promptInput, setPromptInput] = useState('');
 
     return (
         <div className="relative bg-gray-200 min-h-full flex flex-col px-4 py-4">
@@ -64,10 +66,14 @@ export default function Session() {
                 </div>
             </section>
             <section className="md:px-12">
+                {promptInput && <div className="w-full">This exists</div>}
+
                 <form className="flex gap-4">
                     <input
-                        className="bg-white w-full py-2 text-lg px-4 rounded-lg shadow-lg border-none font-bold"
+                        className="bg-white w-full py-2 text-lg px-4 rounded-lg shadow-lg font-bold border-none focus:ring-2 focus:ring-[#55883A] focus:text-[#55883A]"
                         type="text"
+                        onChange={e => setPromptInput(e.target.value)}
+                        value={promptInput}
                         placeholder="Search for a GIF"
                     />
                     <button className="bg-[#55883A] text-white px-8 py-3 rounded-lg shadow-lg">
