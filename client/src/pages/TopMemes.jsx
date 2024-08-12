@@ -65,3 +65,7 @@ const TopMemes = () => {
       <footer className="p-5 bg-gray-800 text-white text-center">
         <p>&copy; 2024 Memable. All rights reserved.</p>
         <p></p>
+        <a href="#" className="hover:underline">Privacy Policy</a> | 
+          <a href="#" className="hover:underline">Terms of Service</a>
+        </p>
+      </footer>
