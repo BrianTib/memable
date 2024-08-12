@@ -1,4 +1,7 @@
+const {GraphQLError}= require ('graphql')
 const jwt = require('jsonwebtoken');
+
+const expiration = '2h'
 
 const authMiddleware = (req, res, next) => {
     const token = req.body?.token || req.query?.token || req.headers?.authorization || '';
@@ -14,5 +17,15 @@ const authMiddleware = (req, res, next) => {
 
     next();
 };
-
+module.exports = {
+    AuthenticationError: new GraphQLError('User could not be authenticated',
+        {
+            extensions: {
+            code: 'UNAUTHENTICATED',
+        },
+        }),
+    signToken: function ({ username, _id }) {
+        const 
+    }
+}
 module.exports = authMiddleware;
