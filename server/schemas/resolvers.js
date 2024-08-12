@@ -12,6 +12,27 @@ const resolvers = {
         },
         session: async (_, { id }) => Session.findById(id),
         sessions: async () => Session.find(),
+        currentRound: async (_, { id }, ctx) => {
+            if (!ctx.user || !ctx.user.id) throw new Error('Not authenticated');
+            const session = await Session.findById(id);
+
+            if (!session) throw new Error('No session found');
+
+            await session.populate({
+                path: 'rounds',
+                populate: [
+                    { path: 'prompt' },
+                    { path: 'players', select: 'username _id' },
+                    { path: 'responses.player', select: 'username _id' },
+                ],
+            });
+
+            if (!session.currentRound?.players.some(p => p._id.toString() === ctx.user.id)) {
+                throw new Error('You are not a player in this round');
+            }
+
+            return session.currentRound;
+        },
         prompt: async (_, { id }) => Prompt.findById(id),
         prompts: async () => Prompt.find(),
     },
@@ -76,16 +97,8 @@ const resolvers = {
                     ],
                 }).save();
 
-                return await session
-                    .populate({
-                        path: 'rounds.prompt',
-                        select: 'text',
-                    })
-                    .populate({
-                        path: 'rounds.players',
-                        select: 'username',
-                    })
-                    .execPopulate();
+                session.populate('rounds');
+                return session;
             } catch (error) {
                 console.error('Error creating session:', error);
                 throw new Error('Failed to create session');

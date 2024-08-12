@@ -59,7 +59,7 @@ const sessionSchema = new Schema(
             },
         },
         currentRound: {
-            type: Schema.Types.Mixed,
+            type: roundSchema,
             get: function () {
                 return this.rounds[this.rounds.length - 1];
             },

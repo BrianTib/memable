@@ -31,12 +31,6 @@ const startApolloServer = async () => {
         });
     }
 
-    // Uncomment this for debugging
-    app.use((req, res, next) => {
-        console.log('Method:', req.method, 'Endpoint:', req.url);
-        next();
-    });
-
     app.use(
         '/graphql',
         expressMiddleware(server, {

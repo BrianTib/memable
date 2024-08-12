@@ -5,6 +5,7 @@ const typeDefs = `
         prompts: [Prompt]
         session(id: ID!): Session
         sessions: [Session]
+        currentRound(id: ID!): Round
         user(id: ID!): User
         users: [User]
     }
