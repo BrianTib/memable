@@ -1,5 +1,5 @@
 const { Prompt } = require('../models');
-const cleanDB = require('./cleanDB');
+const cleanDB = require('../config/cleanDB.js');
 const db = require('../config/connection.js');
 const promptSeeds = require('./promptSeeds.json');
 

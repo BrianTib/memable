@@ -1,1 +1,50 @@
-[{ "prompt": "What is your favorite color?" }]
+[
+    { "text": "When you realize it's Monday morning and you have to go to work." },
+    {
+        "text": "That moment when you try to explain your favorite meme to someone who doesn't get it."
+    },
+    { "text": "When you accidentally hit 'Reply All' on a company-wide email." },
+    { "text": "When you see your ex in public and try to act casual." },
+    { "text": "When you're trying to hold in a sneeze during an important meeting." },
+    { "text": "When the Wi-Fi goes out in the middle of your favorite show." },
+    { "text": "When you thought you had a lot of money left, but then rent hits." },
+    { "text": "When you walk into a room and immediately forget why you went in there." },
+    { "text": "When someone says, 'Let's hang out,' but you really just want to stay home." },
+    { "text": "When you finish a series on Netflix and don't know what to do with your life." },
+    { "text": "When you realize you've been talking to someone with AirPods in the whole time." },
+    { "text": "When your phone autocorrects a word to something embarrassing." },
+    { "text": "When the barista spells your name wrong on your coffee cup, again." },
+    {
+        "text": "When your friend tells you they're 'on their way' but you know they just got out of bed."
+    },
+    { "text": "When you're trying to eat healthy but someone brings donuts to the office." },
+    { "text": "When your favorite song comes on, and you're alone in the car." },
+    { "text": "When you laugh at a text but it's not actually funny." },
+    { "text": "When your parents ask you to help with 'this computer thing'." },
+    { "text": "When you wake up from a nap and don't know what day it is." },
+    { "text": "When you're halfway through a story and realize no one is listening." },
+    { "text": "When you try to act natural after tripping in public." },
+    { "text": "When you finally get a text back after waiting for hours." },
+    { "text": "When you tell a joke and nobody laughs, so you just laugh awkwardly." },
+    { "text": "When you're on a diet but the dessert table is calling your name." },
+    { "text": "When you open the fridge for the fifth time, hoping new food has appeared." },
+    { "text": "When someone spoils the ending of the show you're binge-watching." },
+    { "text": "When you get tagged in a photo that you didn't know was being taken." },
+    {
+        "text": "When you're trying to sleep but remember that one embarrassing thing you did years ago."
+    },
+    { "text": "When you accidentally like an old photo while stalking someone's Instagram." },
+    {
+        "text": "When you realize you've been muted on a Zoom call the whole time you were talking."
+    },
+    { "text": "When you try to take a cute selfie but the front camera catches you off guard." },
+    { "text": "When you realize your favorite shirt is still in the laundry basket." },
+    { "text": "When you see someone from high school and they don't recognize you." },
+    { "text": "When you send a risky text and see the typing dots appear." },
+    { "text": "When your phone dies right before you can send an important message." },
+    { "text": "When you try to impress someone and immediately embarrass yourself." },
+    { "text": "When your favorite artist drops a surprise album and you weren't ready." },
+    { "text": "When you run into someone you know at the grocery store and try to avoid them." },
+    { "text": "When you realize you've been talking to yourself for the past 10 minutes." },
+    { "text": "When you're in the middle of a great dream and your alarm goes off." }
+]
