@@ -50,3 +50,6 @@ const TopMemes = () => {
   {/* Placeholder for dynamic content */}
   <div className="bg-gray-100 p-5 rounded shadow-md">
             <img src="meme1.png" alt="Meme 1" className="w-full h-48 object-cover rounded mb-4" />
+            <h3 className="text-xl font-semibold mb-2">Meme Title 1</h3>
+            <p className="text-gray-600">500 Votes</p>
+          </div>
