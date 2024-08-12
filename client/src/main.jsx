@@ -4,6 +4,7 @@ import Error from './components/Error.jsx';
 import Root from './Root.jsx';
 import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
+import Session from './pages/Session.jsx';
 import Leaderboards from './pages/Leaderboards.jsx';
 import './global.css';
 
@@ -24,6 +25,10 @@ const router = createBrowserRouter([
             {
                 path: '/leaderboards',
                 element: <Leaderboards />,
+            },
+            {
+                path: '/session/:sessionId',
+                element: <Session />,
             },
         ],
     },

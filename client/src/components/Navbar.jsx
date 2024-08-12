@@ -34,7 +34,7 @@ function ButtonItem({ text, theme, to, onClick, navigator: navigate }) {
                     onClick(e);
                 }
             }}
-            className={`block py-2 px-4 md:px-8 xl:px-12 ${themeClass} rounded-lg w-full md:w-auto`}>
+            className={`block py-2 px-4 md:px-8 ${themeClass} rounded-lg w-full md:w-auto`}>
             {text}
         </button>
     );
@@ -52,7 +52,7 @@ export default function Navbar() {
         <nav>
             <div className="w-full flex flex-wrap items-center justify-between px-2 md:px-1 lg:px-12">
                 <Link to="/" className="flex items-center space-x-5 rtl:space-x-reverse">
-                    <img src="logo.png" className="h-auto w-20 md:w-20" alt="Memable Logo" />
+                    <img src="/logo.png" className="h-auto w-20 md:w-20" alt="Memable Logo" />
                     <span className="self-center text-3xl md:text-4xl text-black font-bold whitespace-nowrap">
                         Memable
                     </span>
@@ -91,11 +91,18 @@ export default function Navbar() {
                         <LinkItem isActive={isActive} to="/leaderboards" text="Leaderboard" />
                         <LinkItem isActive={isActive} to="/top-memes" text="Top Memes" />
                         {Auth.isLoggedIn() ? (
-                            <ButtonItem
-                                text="Logout"
-                                theme="danger"
-                                onClick={() => Auth.logout()}
-                            />
+                            <>
+                                <ButtonItem
+                                    text="Create Session"
+                                    to="/session/1"
+                                    navigator={navigate}
+                                />
+                                <ButtonItem
+                                    text="Logout"
+                                    theme="danger"
+                                    onClick={() => Auth.logout()}
+                                />
+                            </>
                         ) : (
                             <>
                                 <ButtonItem to="/login" navigator={navigate} text="Login" />
