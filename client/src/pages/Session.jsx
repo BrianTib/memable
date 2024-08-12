@@ -1,6 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Navigate, useParams } from 'react-router-dom';
 import { useDebounce } from '../hooks/useDebounce';
+import { useQuery } from '@apollo/client';
+import { QUERY_SESSION } from '../../util/queries';
+import Loading from '../components/Loading';
+import Error from '../components/Error';
 
 function PlayerCard({ username, score }) {
     return (
@@ -20,12 +24,29 @@ function PlayerCard({ username, score }) {
 }
 
 export default function Session() {
-    const { sessionId } = useParams();
     const [promptInput, setPromptInput] = useState('');
+    const { sessionId } = useParams();
+    const { loading: sessionDataLoading, data: { session: sessionData } = {} } = useQuery(
+        QUERY_SESSION,
+        {
+            variables: { id: sessionId },
+        },
+    );
+    const debouncedPromptInput = useDebounce(promptInput, 500);
+
+    if (sessionDataLoading) {
+        return <Loading />;
+    }
+
+    if (!sessionData) {
+        return <Error message="Unable to load the session data" />;
+    }
+
+    console.log(sessionData);
 
     return (
         <div className="relative bg-gray-200 min-h-full flex flex-col px-4 py-4">
-            <secion className="flex w-full flex-wrap justify-between h-fit">
+            <section className="flex w-full flex-wrap justify-between h-fit">
                 <div className="flex items-center gap-4">
                     <button className="bg-white p-2 rounded-full shadow-lg">
                         <svg
@@ -51,7 +72,7 @@ export default function Session() {
                     <PlayerCard username="Player 3" score={0} />
                     <PlayerCard username="Player 4" score={0} />
                 </div>
-            </secion>
+            </section>
             <section className="h-full flex flex-grow items-center justify-center">
                 <div className="relative bg-white flex flex-col w-fit md:w-3/12 font-bold text-center gap-1 px-8 py-12 rounded-lg shadow-lg">
                     <h6 className="absolute top-4 left-4 text-gray-500">Round 1/5</h6>
@@ -59,10 +80,7 @@ export default function Session() {
                         Time Left: <span className="text-red-500 font-bold">0:50</span>
                     </h5>
                     <h4 className="text-3xl text-[#55883A]">Prompt</h4>
-                    <p className="text-gray-500 mt-4">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Odit ab illo optio
-                        blanditiis quos voluptates, quasi nam ad magni quae
-                    </p>
+                    <p className="text-gray-500 mt-4">{sessionData.currentRound.prompt.text}</p>
                 </div>
             </section>
             <section className="md:px-12">

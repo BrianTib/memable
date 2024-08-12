@@ -56,22 +56,40 @@ const resolvers = {
             console.log(ctx.user);
             if (!ctx.user || !ctx.user.id) throw new Error('Not authenticated');
 
-            // Get a random prompt
-            const prompt = await Prompt.getRandomPrompt();
+            try {
+                // Get a random prompt
+                const prompt = await Prompt.getRandomPrompt();
+                if (!prompt) {
+                    throw new Error('Failed to retrieve a random prompt');
+                }
 
-            const session = new Session({
-                isOnGoing: true,
-                owner: ctx.user.id,
-                rounds: [
-                    {
-                        prompt: prompt.id,
-                        players: [ctx.user.id],
-                        responses: [],
-                    },
-                ],
-            });
-            await session.save();
-            return session;
+                // Create a new session with one round
+                const session = await new Session({
+                    isOnGoing: true,
+                    owner: ctx.user.id,
+                    rounds: [
+                        {
+                            prompt: prompt.id,
+                            players: [ctx.user.id],
+                            responses: [],
+                        },
+                    ],
+                }).save();
+
+                return await session
+                    .populate({
+                        path: 'rounds.prompt',
+                        select: 'text',
+                    })
+                    .populate({
+                        path: 'rounds.players',
+                        select: 'username',
+                    })
+                    .execPopulate();
+            } catch (error) {
+                console.error('Error creating session:', error);
+                throw new Error('Failed to create session');
+            }
         },
         updateUser: async (_, { id, username, password }) => {
             const updates = {};

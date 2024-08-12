@@ -40,6 +40,10 @@ const typeDefs = `
         _id: ID!
         isOnGoing: Boolean
         rounds: [Round]
+        currentRound: Round
+        owner: User!
+        createdAt: String
+        updatedAt: String
     }
 
     # Prompt Type
@@ -49,23 +53,12 @@ const typeDefs = `
         imageUrl: String
     }
 
-    # Round Type
-    type Round {
-        _id: ID!
-        prompt: String
-        players: [User!]!
-        scores: [PlayerResponse!]!
-        totalRoundScore: Int
-        createdAt: String
-        updatedAt: String
-    }
-
     # Player Response Type
     type PlayerResponse {
         _id: ID!
-        player: User
-        response: String
-        totalScore: Int
+        player: User!
+        response: String!
+        totalScore: Int!
         scores: [Score!]!
         createdAt: String
         updatedAt: String
@@ -73,8 +66,19 @@ const typeDefs = `
 
     # Score Type
     type Score {
-        user: User
-        value: Int
+        user: User!
+        value: Int!
+    }
+
+    # Round Type
+    type Round {
+        _id: ID!
+        prompt: Prompt!
+        players: [User!]!
+        responses: [PlayerResponse!]!
+        totalRoundScore: Int
+        createdAt: String
+        updatedAt: String
     }
 `;
 
