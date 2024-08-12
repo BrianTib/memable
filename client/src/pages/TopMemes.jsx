@@ -7,20 +7,24 @@ const TopMemes = () => {
   // Example meme data (In a real app, this data would come from an API or a database)
   const memeData = {
     day: [
-      { id: 1, title: 'Day Meme 1', votes: 500, image: 'meme1.png' },
+      { id: 1, title: 'When your friend suggests a crazy idea, and you’re actually considering it.', votes: 500, image: 'meme1.png' },
       { id: 2, title: 'Day Meme 2', votes: 350, image: 'meme2.png' },
+      { id: 3, title: 'Day Meme 3', votes: 400, image: 'meme3.png' }, // New meme added
     ],
     week: [
-      { id: 3, title: 'Week Meme 1', votes: 800, image: 'meme3.png' },
-      { id: 4, title: 'Week Meme 2', votes: 650, image: 'meme4.png' },
+      { id: 4, title: 'Week Meme 1', votes: 800, image: 'meme4.png' },
+      { id: 5, title: 'When you try to take a cute selfie, but the camera flips to front-facing.', votes: 650, image: 'meme5.png' },
+      { id: 6, title: 'Week Meme 3', votes: 700, image: 'meme6.png' }, // New meme added
     ],
     month: [
-      { id: 5, title: 'Month Meme 1', votes: 1200, image: 'meme5.png' },
-      { id: 6, title: 'Month Meme 2', votes: 950, image: 'meme6.png' },
+      { id: 7, title: 'When someone spoils the ending of a movie you were planning to watch.', votes: 1200, image: 'meme7.png' },
+      { id: 8, title: 'When you wake up from a nap and don’t know what year it is.', votes: 950, image: 'meme8.png' },
+      { id: 9, title: 'When you realize you’ve been talking for 10 minutes and no one was listening.', votes: 1000, image: 'meme9.png' }, // New meme added
     ],
     year: [
-      { id: 7, title: 'Year Meme 1', votes: 2000, image: 'meme7.png' },
-      { id: 8, title: 'Year Meme 2', votes: 1800, image: 'meme8.png' },
+      { id: 10, title: 'When you have already explained something three times, and they still dont get it.', votes: 2000, image: 'meme10.png' },
+      { id: 11, title: 'When you try to be productive, but Netflix has other plans.', votes: 1800, image: 'meme11.png' },
+      { id: 12, title: 'When you accidentally open a text from someone you were trying to avoid.', votes: 1900, image: 'meme12.png' }, // New meme added
     ],
   };
 
