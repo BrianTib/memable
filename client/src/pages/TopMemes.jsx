@@ -4,27 +4,27 @@ const TopMemes = () => {
   const [filter, setFilter] = useState('day');
   const [memes, setMemes] = useState([]);
 
-  // Example meme data (In a real app, this data would come from an API or a database)
-  const memeData = {
+ // Example meme data (In a real app, this data would come from an API or a database)
+ const memeData = {
     day: [
-      { id: 1, title: 'When your friend suggests a crazy idea, and you’re actually considering it.', votes: 505, image: 'meme1.png' },
-      { id: 2, title: 'When you say " I’ll start tomorrow", but tomorrow never comes.', votes: 492, image: 'meme2.png' },
-      { id: 3, title: 'When your favorite song comes on, and you’re in public, trying not to dance.', votes: 290, image: 'meme3.png' },
+      { id: 1, title: 'When your friend suggests a crazy idea, and you’re actually considering it.', votes: 505, image: '/gifs/idea.gif' },
+      { id: 2, title: 'When you say "I’ll start tomorrow", but tomorrow never comes.', votes: 492, image: '/gifs/tmr.gif' },
+      { id: 3, title: 'When your favorite song comes on, and you’re in public, trying not to dance.', votes: 290, image: '/gifs/dance.gif' },
     ],
     week: [
-      { id: 4, title: 'When you walk into a spider web and start doing ninja moves in public.', votes: 809, image: 'meme4.png' },
-      { id: 5, title: 'When you try to take a cute selfie, but the camera flips to front-facing.', votes: 710, image: 'meme5.png' },
-      { id: 6, title: 'When you’re hungry, but too lazy to cook, so you just stare into the fridge.', votes: 590, image: 'meme6.png' },
+      { id: 4, title: 'When you walk into a spider web and start doing ninja moves in public.', votes: 809, image: '/gifs/spider web.gif' },
+      { id: 5, title: 'When you try to take a cute selfie, but the camera flips to front-facing.', votes: 710, image: '/gifs/selfie.gif' },
+      { id: 6, title: 'When you’re hungry, but too lazy to cook, so you just stare into the fridge.', votes: 590, image: '/gifs/fridge.gif' },
     ],
     month: [
-      { id: 7, title: 'When someone spoils the ending of a movie you were planning to watch.', votes: 1201, image: 'meme7.png' },
-      { id: 8, title: 'When you wake up from a nap and don’t know what year it is.', votes: 1003, image: 'meme8.png' },
-      { id: 9, title: 'When you realize you’ve been talking for 10 minutes and no one was listening.', votes: 982, image: 'meme9.png' },
+      { id: 7, title: 'When someone spoils the ending of a movie you were planning to watch.', votes: 1201, image: '/gifs/spoils.gif' },
+      { id: 8, title: 'When you wake up from a nap and don’t know what year it is.', votes: 1003, image: '/gifs/sleep.gif' },
+      { id: 9, title: 'When you realize you’ve been talking for 10 minutes and no one was listening.', votes: 982, image: '/gifs/not-listending.gif' },
     ],
     year: [
-      { id: 10, title: 'When you have already explained something three times, and they still dont get it.', votes: 2003, image: 'meme10.png' },
-      { id: 11, title: 'When you try to be productive, but Netflix has other plans.', votes: 1942, image: 'meme11.png' },
-      { id: 12, title: 'When you accidentally open a text from someone you were trying to avoid.', votes: 1571, image: 'meme12.png' },
+      { id: 10, title: 'When you have already explained something three times, and they still dont get it.', votes: 2003, image: '/gifs/explain.gif' },
+      { id: 11, title: 'When you try to be productive, but Netflix has other plans.', votes: 1942, image: '/gifs/netfliex.gif' },
+      { id: 12, title: 'When you accidentally open a text from someone you were trying to avoid.', votes: 1571, image: '/gifs/text.gif' },
     ],
   };
 
