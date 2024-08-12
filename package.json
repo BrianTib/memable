@@ -10,6 +10,7 @@
         "install": "cd server && npm i && cd ../client && npm i",
         "outdated": "cd server && npm outdated && cd ../client && npm outdated",
         "update": "cd server && npm update && cd ../client && npm update",
+        "seed": "node server/seeds/prompts.js",
         "start": "node server --ignore client"
     },
     "keywords": [],

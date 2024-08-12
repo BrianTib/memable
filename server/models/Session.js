@@ -5,13 +5,6 @@ const playerResponseSchema = new Schema(
     {
         player: { type: Schema.Types.ObjectId, ref: 'User', required: true },
         response: { type: String, required: true },
-        totalScore: {
-            type: Number,
-            default: 0,
-            get: function () {
-                return this.scores.reduce((acc, score) => acc + score.value, 0);
-            },
-        },
         // An array of scores. Each user is the user who gave a score, and the value is the score they gave.
         scores: [
             {
@@ -19,6 +12,13 @@ const playerResponseSchema = new Schema(
                 value: Number,
             },
         ],
+        totalScore: {
+            type: Number,
+            default: 0,
+            get: function () {
+                return this.scores.reduce((acc, score) => acc + score.value, 0);
+            },
+        },
     },
     {
         timestamps: true,
@@ -29,7 +29,7 @@ const playerResponseSchema = new Schema(
 // Round schema
 const roundSchema = new Schema(
     {
-        prompt: { type: Schema.Types.ObjectId, ref: 'String', required: true },
+        prompt: { type: Schema.Types.ObjectId, ref: 'Prompt', required: true },
         players: [{ type: Schema.Types.ObjectId, ref: 'User' }],
         responses: [playerResponseSchema],
         totalRoundScore: {
@@ -59,10 +59,9 @@ const sessionSchema = new Schema(
             },
         },
         currentRound: {
-            type: Number,
-            default: 1,
+            type: roundSchema,
             get: function () {
-                return this.rounds.length;
+                return this.rounds[this.rounds.length - 1];
             },
         },
         rounds: {

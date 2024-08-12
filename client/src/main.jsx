@@ -4,8 +4,10 @@ import Error from './components/Error.jsx';
 import Root from './Root.jsx';
 import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
+import Session from './pages/Session.jsx';
 import Leaderboards from './pages/Leaderboards.jsx';
 import TopMemes from './pages/TopMemes.jsx'; 
+import HowToPlay from './pages/HowToPlay.jsx';
 import './global.css';
 
 const router = createBrowserRouter([
@@ -27,8 +29,16 @@ const router = createBrowserRouter([
                 element: <Leaderboards />,
             },
             {
-                path: '/top-memes', // Add this line to handle /top-memes path
+                path: '/top-memes', 
                 element: <TopMemes />,
+            },
+            {
+                path: '/how-to-play',
+                element: <HowToPlay />,
+            },
+            {
+                path: '/session/:sessionId',
+                element: <Session />,
             },
         ],
     },

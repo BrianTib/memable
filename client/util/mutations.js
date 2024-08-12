@@ -23,3 +23,11 @@ export const LOGIN = gql`
         }
     }
 `;
+
+export const CREATE_SESSION = gql`
+    mutation createSession {
+        createSession {
+            _id
+        }
+    }
+`;
