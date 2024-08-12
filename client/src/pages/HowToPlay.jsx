@@ -18,11 +18,11 @@ export default function Page() {
                         fill="#fff"></path>
                 </svg>
 
-                <div className="flex flex-col gap-5 w-full items-center md:pt-24 pt-16 px-5">
+                <div className="flex flex-col gap-5 w-full items-center md:pt-24 pt-16 px-5 mb-16">
                     <h3 className="text-white text-4xl md:text-5xl text-center">How To Play</h3>
                 </div>
 
-                <div>
+                <div className="">
                     <FeatureInstructions />
                 </div>
 
