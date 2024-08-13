@@ -1,4 +1,6 @@
 const typeDefs = `
+    scalar Date
+
     type Query {
         currentUser: User
         prompt(id: ID!): Prompt
@@ -13,6 +15,7 @@ const typeDefs = `
     type Mutation {
         createPrompt(text: String, imageUrl: String): Prompt
         createSession: Session
+        submitRoundResponse(sessionId: ID!, title: String!, url: String!): Boolean
         deletePrompt(id: ID!): Boolean
         deleteSession(id: ID!): Boolean
         deleteUser(id: ID!): Boolean
@@ -43,8 +46,8 @@ const typeDefs = `
         rounds: [Round]
         currentRound: Round
         owner: User!
-        createdAt: String
-        updatedAt: String
+        createdAt: Date
+        updatedAt: Date
     }
 
     # Prompt Type
@@ -61,8 +64,8 @@ const typeDefs = `
         response: String!
         totalScore: Int!
         scores: [Score!]!
-        createdAt: String
-        updatedAt: String
+        createdAt: Date
+        updatedAt: Date
     }
 
     # Score Type
@@ -78,8 +81,9 @@ const typeDefs = `
         players: [User!]!
         responses: [PlayerResponse!]!
         totalRoundScore: Int
-        createdAt: String
-        updatedAt: String
+        roundNumber: Int
+        createdAt: Date
+        updatedAt: Date
     }
 `;
 
