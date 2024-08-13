@@ -1,4 +1,6 @@
 const typeDefs = `
+    scalar Date
+
     type Query {
         currentUser: User
         prompt(id: ID!): Prompt
@@ -43,8 +45,8 @@ const typeDefs = `
         rounds: [Round]
         currentRound: Round
         owner: User!
-        createdAt: String
-        updatedAt: String
+        createdAt: Date
+        updatedAt: Date
     }
 
     # Prompt Type
@@ -61,8 +63,8 @@ const typeDefs = `
         response: String!
         totalScore: Int!
         scores: [Score!]!
-        createdAt: String
-        updatedAt: String
+        createdAt: Date
+        updatedAt: Date
     }
 
     # Score Type
@@ -78,8 +80,8 @@ const typeDefs = `
         players: [User!]!
         responses: [PlayerResponse!]!
         totalRoundScore: Int
-        createdAt: String
-        updatedAt: String
+        createdAt: Date
+        updatedAt: Date
     }
 `;
 

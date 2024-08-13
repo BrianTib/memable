@@ -1,8 +1,30 @@
 const { User, Session, Prompt } = require('../models');
+const { GraphQLScalarType, Kind } = require('graphql');
 const jwt = require('jsonwebtoken');
 const expiration = '6h';
 
+const dateScalar = new GraphQLScalarType({
+    name: 'Date',
+    description: 'Custom Date scalar type',
+    serialize(value) {
+        // Convert outgoing Date to ISO string for the client
+        return value.toISOString();
+    },
+    parseValue(value) {
+        // Convert incoming ISO string to Date
+        return new Date(value);
+    },
+    parseLiteral(ast) {
+        if (ast.kind === Kind.STRING) {
+            // Convert hard-coded AST string to Date
+            return new Date(ast.value);
+        }
+        return null; // Invalid hard-coded value (not an ISO string)
+    },
+});
+
 const resolvers = {
+    Date: dateScalar,
     Query: {
         user: async (_, { id }) => User.findById(id),
         users: async () => User.find(),

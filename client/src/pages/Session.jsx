@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { useThrottle } from '../hooks/useThrottle';
 import { useQuery } from '@apollo/client';
@@ -8,6 +8,12 @@ import Error from '../components/Error';
 import axios from 'axios';
 
 import Auth from '../../util/auth';
+
+function styleTimeLeft(timeLeft) {
+    const minutes = Math.floor(timeLeft / 60_000);
+    const seconds = Math.floor((timeLeft % 60_000) / 1000);
+    return `${minutes}:${seconds.toString().padStart(2, '0')}`;
+}
 
 function PlayerCard({ username, score }) {
     return (
@@ -48,6 +54,7 @@ export default function Session() {
     const [giphyResults, setGiphyResults] = useState([]);
     const [promptInput, setPromptInput] = useState('');
     const [selectedGif, setSelectedGif] = useState(null);
+    const [roundTimeLeft, setRoundTimeLeft] = useState(0);
     const { sessionId } = useParams();
 
     const throttledGIFSearch = useThrottle(async () => {
@@ -64,12 +71,36 @@ export default function Session() {
         setGiphyResults([]);
     };
 
-    const { loading: roundDataLoading, data: { currentRound: roundData } = {} } = useQuery(
-        QUERY_CURRENT_ROUND,
-        {
-            variables: { id: sessionId },
-        },
-    );
+    const {
+        loading: roundDataLoading,
+        data: { currentRound: roundData } = {},
+        refetch: refetchCurrentRount,
+    } = useQuery(QUERY_CURRENT_ROUND, {
+        variables: { id: sessionId },
+    });
+
+    useEffect(() => {
+        if (roundData) {
+            const createdAt = Date.parse(roundData.createdAt);
+            const now = Date.now();
+            const endTime = createdAt + 60 * 1000 * 5;
+            const timeLeft = endTime - now;
+            setRoundTimeLeft(timeLeft);
+
+            const intervalId = setInterval(() => {
+                setRoundTimeLeft(prevTimeLeft => {
+                    if (prevTimeLeft <= 1000) {
+                        clearInterval(intervalId);
+                        refetchCurrentRount();
+                        return 0;
+                    }
+                    return prevTimeLeft - 1000;
+                });
+            }, 1000);
+
+            return () => clearInterval(intervalId);
+        }
+    }, [refetchCurrentRount, roundData]);
 
     if (roundDataLoading) {
         return <Loading />;
@@ -79,26 +110,11 @@ export default function Session() {
         return <Error message="Unable to load the round data" />;
     }
 
-    // console.log(roundData);
-
     return (
         <div className="relative bg-gray-200 min-h-full flex flex-col px-4 py-4 gap-4">
             <section className="flex w-full flex-wrap justify-between h-fit">
                 <div className="flex items-center gap-4">
-                    <button className="bg-white p-2 rounded-full shadow-lg">
-                        <svg
-                            className="w-8 h-8"
-                            viewBox="0 0 36 36"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <g opacity="0.75">
-                                <path
-                                    d="M18 6C18.3978 6 18.7794 6.15804 19.0607 6.43934C19.342 6.72064 19.5 7.10218 19.5 7.5V16.5H28.5C28.8978 16.5 29.2794 16.658 29.5607 16.9393C29.842 17.2206 30 17.6022 30 18C30 18.3978 29.842 18.7794 29.5607 19.0607C29.2794 19.342 28.8978 19.5 28.5 19.5H19.5V28.5C19.5 28.8978 19.342 29.2794 19.0607 29.5607C18.7794 29.842 18.3978 30 18 30C17.6022 30 17.2206 29.842 16.9393 29.5607C16.658 29.2794 16.5 28.8978 16.5 28.5V19.5H7.5C7.10218 19.5 6.72064 19.342 6.43934 19.0607C6.15804 18.7794 6 18.3978 6 18C6 17.6022 6.15804 17.2206 6.43934 16.9393C6.72064 16.658 7.10218 16.5 7.5 16.5H16.5V7.5C16.5 7.10218 16.658 6.72064 16.9393 6.43934C17.2206 6.15804 17.6022 6 18 6Z"
-                                    fill="black"
-                                />
-                            </g>
-                        </svg>
-                    </button>
+                    <CopyCodeButton code={`http://localhost:3000/session/${sessionId}`} />
                     <button className="bg-red-600 text-white px-8 py-3 rounded-lg shadow-lg">
                         Leave
                     </button>
@@ -124,11 +140,19 @@ export default function Session() {
                 )}
             </section>
             <section className="h-full flex flex-grow items-center justify-center">
-                <div className="relative bg-white flex flex-col items-center w-fit md:w-3/12 font-bold text-center gap-1 px-8 py-12 rounded-lg shadow-lg">
-                    <h6 className="absolute top-4 left-4 text-gray-500">Round 1/5</h6>
-                    <h5 className="text-gray-700 text-2xl">
-                        Time Left: <span className="text-red-500 font-bold">0:50</span>
-                    </h5>
+                <div className="relative bg-white flex flex-col items-center w-fit md:w-3/12 font-bold text-center gap-4 px-8 py-6 rounded-lg shadow-lg">
+                    <div className="w-full flex justify-between items-center">
+                        <h6 className="text-gray-500 font-bold text-lg">Round 1/5</h6>
+                    </div>
+                    {roundTimeLeft > 0 && (
+                        <h5 className="text-gray-700 text-2xl">
+                            Time Left:{' '}
+                            <span className="text-red-500 font-bold">
+                                {styleTimeLeft(roundTimeLeft)}
+                            </span>
+                        </h5>
+                    )}
+
                     <h4 className="text-3xl text-[#55883A]">Prompt</h4>
                     <p className="text-gray-500 md:text-lg mt-4">{roundData?.prompt.text}</p>
                     {selectedGif && (
@@ -167,5 +191,30 @@ export default function Session() {
                 </form>
             </section>
         </div>
+    );
+}
+
+function CopyCodeButton({ code }) {
+    const [copied, setCopied] = useState(false);
+    const dialogRef = useRef(null);
+
+    const handleCopy = () => {
+        if (!('clipboard' in navigator)) {
+            return;
+        }
+
+        navigator.clipboard.writeText(code).then(() => {
+            setCopied(true);
+            setTimeout(() => setCopied(false), 2000); // Reset the copied state after 2 seconds
+        });
+    };
+
+    return (
+        <button
+            type="button"
+            onClick={handleCopy}
+            className="text-white bg-[#55883A] focus:ring-0 focus:outline-none font-medium rounded-lg px-8 py-3 text-center">
+            {copied ? 'Copied!' : 'Copy Invite'}
+        </button>
     );
 }
