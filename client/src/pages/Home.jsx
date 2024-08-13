@@ -2,11 +2,14 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { prettyNumber } from '../../util/util';
 import FeatureIntro from '../components/FeatureIntro';
+import LeaderBoard from '../components/LeaderBoard';
 
 export default function Page() {
     return (
         <div>
             <FeatureIntro />
+
+            <LeaderBoard />
             <section className="bg-[#55883A] relative py-10">
                 <svg
                     viewBox="0 0 1440 58"
