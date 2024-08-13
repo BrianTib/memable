@@ -9,6 +9,8 @@ import axios from 'axios';
 
 import Auth from '../../util/auth';
 
+const ROUND_DURATION = 60 * 1000 * 1;
+
 function styleTimeLeft(timeLeft) {
     const minutes = Math.floor(timeLeft / 60_000);
     const seconds = Math.floor((timeLeft % 60_000) / 1000);
@@ -81,9 +83,11 @@ export default function Session() {
 
     useEffect(() => {
         if (roundData) {
+            console.log(roundData);
+
             const createdAt = Date.parse(roundData.createdAt);
             const now = Date.now();
-            const endTime = createdAt + 60 * 1000 * 5;
+            const endTime = createdAt + ROUND_DURATION;
             const timeLeft = endTime - now;
             setRoundTimeLeft(timeLeft);
 
@@ -162,7 +166,9 @@ export default function Session() {
                                 src={selectedGif.images.original.url}
                                 alt={selectedGif.title}
                             />
-                            <button className="bg-[#55883A] w-fit text-white px-8 py-3 rounded-lg shadow-lg">
+                            <button
+                                className="bg-[#55883A] w-fit text-white px-8 py-3 rounded-lg shadow-lg"
+                                disabled={roundTimeLeft <= 0}>
                                 Submit
                             </button>
                         </>
@@ -181,6 +187,7 @@ export default function Session() {
                     <input
                         className="bg-white w-full py-2 text-lg px-4 rounded-lg shadow-lg font-bold border-none focus:ring-2 focus:ring-[#55883A] focus:text-[#55883A]"
                         type="text"
+                        disabled={roundTimeLeft <= 0}
                         onChange={e => {
                             setPromptInput(e.target.value);
                             throttledGIFSearch();
