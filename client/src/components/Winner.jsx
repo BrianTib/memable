@@ -1,6 +1,5 @@
 import React, { useState } from "react";
-import { Link } from 'react-router-dom';
-import { prettyNumber } from '../../util/util';
+
 import Session from '../pages/Session'
 
 function SessionWinner() {
