@@ -99,7 +99,7 @@ const TopMemes = () => {
           {memes.map((meme) => (
             <div key={meme.id} className="bg-gray-100 p-5 rounded shadow-md">
               <img src={meme.image} />
-              <h3 className="text-xl font-semibold mb-2">{meme.title}</h3>
+              <h3 className="text-xl text-black font-semibold mb-2">{meme.title}</h3>
               <p className="text-gray-600">{meme.votes} Votes</p>
             </div>
           ))}
