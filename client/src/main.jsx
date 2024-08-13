@@ -8,7 +8,6 @@ import Session from './pages/Session.jsx';
 import Leaderboards from './pages/Leaderboards.jsx';
 import TopMemes from './pages/TopMemes.jsx'; 
 import HowToPlay from './pages/HowToPlay.jsx';
-import ProtectedRoute from './components/ProtectedRoute.jsx'; // Import the ProtectedRoute
 import './global.css';
 
 const router = createBrowserRouter([
@@ -39,7 +38,7 @@ const router = createBrowserRouter([
             },
             {
                 path: '/session/:sessionId',
-                element: <ProtectedRoute element={Session} />, 
+                element: <Session />,
             },
         ],
     },
