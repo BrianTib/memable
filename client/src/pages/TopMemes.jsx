@@ -38,11 +38,23 @@ const TopMemes = () => {
   };
 
   return (
-    <div className="flex flex-col min-h-screen bg-white text-gray-900">
+    <div>
+      <section className="bg-[#55883A] relative py-10">
+                  <svg
+                    viewBox="0 0 1440 58"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="100%"
+                    className="absolute top-0 bg-transparent">
+                    <path
+                        d="M-100 58C-100 58 218.416 36.3297 693.5 36.3297C1168.58 36.3297 1487 58 1487 58V-3.8147e-06H-100V58Z"
+                        fill="#fff"></path>
+                </svg>
+    <div className="flex flex-col min-h-screen text-white">
       {/* Main Content */}
       <main className="flex-grow px-5 py-10">
-        <h2 className="text-3xl font-bold text-center">Top Memes</h2>
-        <p className="text-center text-lg text-gray-600 mb-10">
+        <h2 className="text-4xl md:text-5xl text-center">Top Memes</h2>
+        <p className="text-center text-lg text-white mb-10">
           Explore the funniest memes from today, this week, this month, and this year!
         </p>
 
@@ -50,7 +62,7 @@ const TopMemes = () => {
         <div className="flex justify-center mb-8">
   <button
     className={`px-4 py-2 mx-2 rounded-lg font-bold border border-transparent ${
-      filter === 'day' ? 'bg-[rgb(85,136,58)] text-white' : 'bg-gray-200 text-black hover:bg-gray-300'
+      filter === 'day' ? 'bg-gray-200 text-[rgb(85,136,58)]' : 'bg-gray-200 text-black hover:bg-gray-300'
     }`}
     onClick={() => handleFilterChange('day')}
   >
@@ -58,7 +70,7 @@ const TopMemes = () => {
   </button>
   <button
     className={`px-4 py-2 mx-2 rounded-lg font-bold border border-transparent ${
-      filter === 'week' ? 'bg-[rgb(85,136,58)] text-white' : 'bg-gray-200 text-black hover:bg-gray-300'
+      filter === 'week' ? 'bg-gray-200 text-[rgb(85,136,58)]' : 'bg-gray-200 text-black hover:bg-gray-300'
     }`}
     onClick={() => handleFilterChange('week')}
   >
@@ -66,7 +78,7 @@ const TopMemes = () => {
   </button>
   <button
     className={`px-4 py-2 mx-2 rounded-lg font-bold border border-transparent ${
-      filter === 'month' ? 'bg-[rgb(85,136,58)] text-white' : 'bg-gray-200 text-black hover:bg-gray-300'
+      filter === 'month' ? 'bg-gray-200 text-[rgb(85,136,58)]' : 'bg-gray-200 text-black hover:bg-gray-300'
     }`}
     onClick={() => handleFilterChange('month')}
   >
@@ -74,7 +86,7 @@ const TopMemes = () => {
   </button>
   <button
     className={`px-4 py-2 mx-2 rounded-lg font-bold border border-transparent ${
-      filter === 'year' ? 'bg-[rgb(85,136,58)] text-white' : 'bg-gray-200 text-black hover:bg-gray-300'
+      filter === 'year' ? 'bg-gray-200 text-[rgb(85,136,58)]' : 'bg-gray-200 text-black hover:bg-gray-300'
     }`}
     onClick={() => handleFilterChange('year')}
   >
@@ -93,7 +105,8 @@ const TopMemes = () => {
           ))}
         </div>
       </main>
-
+      </div>
+      </section>
     </div>
   );
 };

@@ -6,6 +6,7 @@ Memable is a web application where users can log in, play, and search for memes.
 - [Installation](##Installation)
 - [Usage](##Usage)
 - [Technologies](##Technologies)
+- [License](#License)
 
 ## Features
 - User Authentication: Secure login and sign up
@@ -47,3 +48,4 @@ Backend
 - Express.js
 - MongoDB and Mongoose 
 - JWT for authentication
+
