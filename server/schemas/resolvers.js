@@ -1,8 +1,33 @@
 const { User, Session, Prompt } = require('../models');
+const { GraphQLScalarType, Kind } = require('graphql');
 const jwt = require('jsonwebtoken');
 const expiration = '6h';
 
+const SESSION_DURATION = 2 * 60 * 1000;
+const MAX_SESSIONS = 5;
+
+const dateScalar = new GraphQLScalarType({
+    name: 'Date',
+    description: 'Custom Date scalar type',
+    serialize(value) {
+        // Convert outgoing Date to ISO string for the client
+        return value.toISOString();
+    },
+    parseValue(value) {
+        // Convert incoming ISO string to Date
+        return new Date(value);
+    },
+    parseLiteral(ast) {
+        if (ast.kind === Kind.STRING) {
+            // Convert hard-coded AST string to Date
+            return new Date(ast.value);
+        }
+        return null; // Invalid hard-coded value (not an ISO string)
+    },
+});
+
 const resolvers = {
+    Date: dateScalar,
     Query: {
         user: async (_, { id }) => User.findById(id),
         users: async () => User.find(),
@@ -29,6 +54,45 @@ const resolvers = {
 
             if (!session.currentRound?.players.some(p => p._id.toString() === ctx.user.id)) {
                 throw new Error('You are not a player in this round');
+            }
+
+            if (session.isOnGoing && session.rounds.length < MAX_SESSIONS) {
+                // Check if the round has ended
+                const createdAt = Date.parse(session.currentRound.createdAt);
+                const now = Date.now();
+                const endTime = createdAt + SESSION_DURATION;
+                if (now > endTime) {
+                    // Add a new round
+                    const prompt = await Prompt.getRandomPrompt();
+
+                    if (!prompt) {
+                        throw new Error('Failed to retrieve a random prompt');
+                    }
+
+                    const roundPlayers = [ctx.user.id];
+                    // If this request isnt from the owner, add the owner to the new round
+                    if (session.owner.toString() !== ctx.user.id) {
+                        roundPlayers.push(session.owner);
+                    }
+
+                    session.rounds.push({
+                        prompt: prompt.id,
+                        players: roundPlayers,
+                        responses: [],
+                        roundNumber: session.rounds.length + 1,
+                    });
+
+                    await session.populate({
+                        path: 'rounds',
+                        populate: [
+                            { path: 'prompt' },
+                            { path: 'players', select: 'username _id' },
+                            { path: 'responses.player', select: 'username _id' },
+                        ],
+                    });
+
+                    session.currentRound = session.rounds[session.rounds.length - 1];
+                }
             }
 
             return session.currentRound;
@@ -92,6 +156,7 @@ const resolvers = {
                         {
                             prompt: prompt.id,
                             players: [ctx.user.id],
+                            roundNumber: 1,
                             responses: [],
                         },
                     ],
@@ -103,6 +168,29 @@ const resolvers = {
                 console.error('Error creating session:', error);
                 throw new Error('Failed to create session');
             }
+        },
+        submitRoundResponse: async (_, { sessionId, title, url }, ctx) => {
+            if (!ctx.user || !ctx.user.id) throw new Error('Not authenticated');
+
+            const session = await Session.findById(sessionId);
+            if (!session) throw new Error('No session found');
+
+            if (!session.currentRound.players.some(p => p.toString() === ctx.user.id)) {
+                throw new Error('You are not a player in this round');
+            }
+
+            if (!session.isOnGoing) throw new Error('The session is not ongoing');
+
+            const response = {
+                player: ctx.user.id,
+                title,
+                url,
+                totalScore: 0,
+            };
+
+            session.currentRound.responses.push(response);
+            await session.save();
+            return true;
         },
         updateUser: async (_, { id, username, password }) => {
             const updates = {};

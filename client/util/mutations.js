@@ -31,3 +31,11 @@ export const CREATE_SESSION = gql`
         }
     }
 `;
+
+export const SUBMIT_ROUND_RESPONSE = gql`
+    mutation submitRoundResponse($sessionId: String!, $title: String!, $url: String!) {
+        submitRoundResponse(sessionId: $sessionId, title: $title, url: $url) {
+            success
+        }
+    }
+`;

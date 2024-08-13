@@ -1,9 +1,8 @@
 import React from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
 
-// Example of an authentication function; you could check for a token or session
 const isAuthenticated = () => {
-  return !!localStorage.getItem('authToken'); // Adjust based on your auth logic
+  return !!localStorage.getItem('authToken'); 
 };
 
 const ProtectedRoute = ({ element: Element }) => {
