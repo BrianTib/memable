@@ -14,5 +14,16 @@ function sessionGame() {
       meme3: 1,
   });
 
-  const [winner, setWinner] = useState(null);
+    const [winner, setWinner] = useState(null);
+
+    function pickWinner() {
+    let maxVotes = 0;
+    let winningMeme = null;
+
+  for (let memeId in votes) {
+      if (votes[memeId] > maxVotes) {
+        maxVotes = votes[memeId];
+        winningMeme = memeId;
+      }
+    }
 }
