@@ -63,7 +63,27 @@ function SessionWinner() {
 
                 <button onClick={pickWinner}>End Round & Pick Winner</button>
 
-               
+                {winner && (
+                    <div>
+                        <h2>Winner(s) of the Round:</h2>
+                        <ul>
+                            {winner.map(w => (
+                                <li key={w.id}>
+                                    {w.name} with {w.points} points
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+
+                <h3 className="text-4xl md:text-5xl text-center">Current Scores:</h3>
+                <ul>
+                    {players.map(player => (
+                        <li key={player.id}>
+                            {player.name}: {player.points} points
+                        </li>
+                    ))}
+                </ul>
             </section>
         </div>
     );
