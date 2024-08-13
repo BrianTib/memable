@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { prettyNumber } from '../../util/util';
 import RecentActCard from '../components/RecentActCard';
-
+import MatchesWonCard from '../components/MatchesWonCard';
 export default function Page() {
     return (
         <div>
@@ -28,17 +28,17 @@ export default function Page() {
                     <h3 className="text-white text-4xl md:text-5xl text-center">Profile</h3>
                 </div>
 
-                <div className="flex justify-center items-center m-5" >
+                <div className="flex justify-center items-center m-5">
                     <div className="m-5">
-                        <RecentActCard/>
+                        <RecentActCard />
                     </div>
 
                     <div className="m-5">
-                        <ProfileCard />
+                        <RecentActCard />
                     </div>
 
                     <div className="m-5">
-                        <ProfileCard />
+                        <MatchesWonCard />
                     </div>
                 </div>
 

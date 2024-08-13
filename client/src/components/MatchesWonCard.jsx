@@ -1,10 +1,10 @@
 import React from 'react';
 
-const RecentActCard = ({ image, text }) => {
+const MatchesWonCard = ({ image, text }) => {
     return (
         <div className=''>
         <div className="flex flex-col justify-center items-center bg-gray-100 p-5 rounded shadow-md">
-            <h3 className="text-xl text-black font-semibold mb-2">Recent Activity</h3>
+            <h3 className="text-xl text-black font-semibold mb-2">Matches Won: 5</h3>
             <ul >
                 <li className='py-4 '>
                     <div className="bg-white w-96 h-16 flex gap-5 rounded-lg items-center px-4 shadow-md">
@@ -72,4 +72,4 @@ const RecentActCard = ({ image, text }) => {
     );
 };
 
-export default RecentActCard;
+export default MatchesWonCard;
