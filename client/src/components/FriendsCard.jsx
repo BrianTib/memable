@@ -15,6 +15,7 @@ const FriendsCard = () => {
                             <path d="M15.71 12.71a6 6 0 1 0-7.42 0 10 10 0 0 0-6.22 8.18 1 1 0 0 0 2 .22 8 8 0 0 1 15.9 0 1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1 10 10 0 0 0-6.25-8.19M12 12a4 4 0 1 1 4-4 4 4 0 0 1-4 4" />
                         </svg>
                         <p className="flex-grow font-bold text-lg">Jakostein97</p>
+                        <p className="flex-grow font-bold text-lg">1,000 points</p>
                     </div>
                 </li>
                 <li className='pb-4'>
@@ -26,6 +27,7 @@ const FriendsCard = () => {
                             <path d="M15.71 12.71a6 6 0 1 0-7.42 0 10 10 0 0 0-6.22 8.18 1 1 0 0 0 2 .22 8 8 0 0 1 15.9 0 1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1 10 10 0 0 0-6.25-8.19M12 12a4 4 0 1 1 4-4 4 4 0 0 1-4 4" />
                         </svg>
                         <p className="flex-grow font-bold text-lg">jmeason</p>
+                        <p className="flex-grow font-bold text-lg">1,200 points</p>
                     </div>
                 </li>
                 <li className='pb-4'>
@@ -37,6 +39,7 @@ const FriendsCard = () => {
                             <path d="M15.71 12.71a6 6 0 1 0-7.42 0 10 10 0 0 0-6.22 8.18 1 1 0 0 0 2 .22 8 8 0 0 1 15.9 0 1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1 10 10 0 0 0-6.25-8.19M12 12a4 4 0 1 1 4-4 4 4 0 0 1-4 4" />
                         </svg>
                         <p className="flex-grow font-bold text-lg">jonghoBae0218</p>
+                        <p className="flex-grow font-bold text-lg">970 points</p>
                     </div>
                 </li>
                 <li className='pb-4'>
@@ -48,6 +51,7 @@ const FriendsCard = () => {
                             <path d="M15.71 12.71a6 6 0 1 0-7.42 0 10 10 0 0 0-6.22 8.18 1 1 0 0 0 2 .22 8 8 0 0 1 15.9 0 1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1 10 10 0 0 0-6.25-8.19M12 12a4 4 0 1 1 4-4 4 4 0 0 1-4 4" />
                         </svg>
                         <p className="flex-grow font-bold text-lg">cowboytrex</p>
+                        <p className="flex-grow font-bold text-lg">1,500 points</p>
                     </div>
                 </li>
                 <li className='pb-4'>
@@ -59,6 +63,7 @@ const FriendsCard = () => {
                             <path d="M15.71 12.71a6 6 0 1 0-7.42 0 10 10 0 0 0-6.22 8.18 1 1 0 0 0 2 .22 8 8 0 0 1 15.9 0 1 1 0 0 0 1 .89h.11a1 1 0 0 0 .88-1.1 10 10 0 0 0-6.25-8.19M12 12a4 4 0 1 1 4-4 4 4 0 0 1-4 4" />
                         </svg>
                         <p className="flex-grow font-bold text-lg">BrianTib</p>
+                        <p className="flex-grow font-bold text-lg">861 points</p>
                     </div>
                 </li>
             </ul>
