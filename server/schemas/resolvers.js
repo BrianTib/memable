@@ -3,6 +3,9 @@ const { GraphQLScalarType, Kind } = require('graphql');
 const jwt = require('jsonwebtoken');
 const expiration = '6h';
 
+const SESSION_DURATION = 2 * 60 * 1000;
+const MAX_SESSIONS = 5;
+
 const dateScalar = new GraphQLScalarType({
     name: 'Date',
     description: 'Custom Date scalar type',
@@ -51,6 +54,45 @@ const resolvers = {
 
             if (!session.currentRound?.players.some(p => p._id.toString() === ctx.user.id)) {
                 throw new Error('You are not a player in this round');
+            }
+
+            if (session.isOnGoing && session.rounds.length < MAX_SESSIONS) {
+                // Check if the round has ended
+                const createdAt = Date.parse(session.currentRound.createdAt);
+                const now = Date.now();
+                const endTime = createdAt + SESSION_DURATION;
+                if (now > endTime) {
+                    // Add a new round
+                    const prompt = await Prompt.getRandomPrompt();
+
+                    if (!prompt) {
+                        throw new Error('Failed to retrieve a random prompt');
+                    }
+
+                    const roundPlayers = [ctx.user.id];
+                    // If this request isnt from the owner, add the owner to the new round
+                    if (session.owner.toString() !== ctx.user.id) {
+                        roundPlayers.push(session.owner);
+                    }
+
+                    session.rounds.push({
+                        prompt: prompt.id,
+                        players: roundPlayers,
+                        responses: [],
+                        roundNumber: session.rounds.length + 1,
+                    });
+
+                    await session.populate({
+                        path: 'rounds',
+                        populate: [
+                            { path: 'prompt' },
+                            { path: 'players', select: 'username _id' },
+                            { path: 'responses.player', select: 'username _id' },
+                        ],
+                    });
+
+                    session.currentRound = session.rounds[session.rounds.length - 1];
+                }
             }
 
             return session.currentRound;
@@ -114,6 +156,7 @@ const resolvers = {
                         {
                             prompt: prompt.id,
                             players: [ctx.user.id],
+                            roundNumber: 1,
                             responses: [],
                         },
                     ],

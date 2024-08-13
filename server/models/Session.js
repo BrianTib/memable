@@ -32,6 +32,7 @@ const roundSchema = new Schema(
         prompt: { type: Schema.Types.ObjectId, ref: 'Prompt', required: true },
         players: [{ type: Schema.Types.ObjectId, ref: 'User' }],
         responses: [playerResponseSchema],
+        roundNumber: Number,
         totalRoundScore: {
             type: Number,
             default: 0,

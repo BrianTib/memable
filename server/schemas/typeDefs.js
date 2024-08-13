@@ -80,6 +80,7 @@ const typeDefs = `
         players: [User!]!
         responses: [PlayerResponse!]!
         totalRoundScore: Int
+        roundNumber: Int
         createdAt: Date
         updatedAt: Date
     }
