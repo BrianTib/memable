@@ -1,6 +1,6 @@
 import React from 'react';
 
-const MatchesWonCard = ({ image, text }) => {
+const MatchesWonCard = () => {
     return (
         <div className=''>
         <div className="flex flex-col justify-center items-center bg-gray-100 p-5 rounded shadow-md">
