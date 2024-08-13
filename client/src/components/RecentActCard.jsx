@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ProfileCard = ({ image, text }) => {
+const RecentActCard = ({ image, text }) => {
     return (
         <div>
         <div className="bg-gray-100 p-5 rounded shadow-md">
@@ -72,4 +72,4 @@ const ProfileCard = ({ image, text }) => {
     );
 };
 
-export default ProfileCard;
+export default RecentActCard;

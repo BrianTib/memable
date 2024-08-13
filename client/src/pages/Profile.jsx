@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { prettyNumber } from '../../util/util';
-import ProfileCard from '../components/ProfileCard';
+import RecentActCard from '../components/RecentActCard';
 
 export default function Page() {
     return (
@@ -30,7 +30,7 @@ export default function Page() {
 
                 <div className="flex justify-center items-center m-5" >
                     <div className="m-5">
-                        <ProfileCard />
+                        <RecentActCard/>
                     </div>
 
                     <div className="m-5">
