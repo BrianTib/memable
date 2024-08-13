@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 import { prettyNumber } from '../../util/util';
 import RecentActCard from '../components/RecentActCard';
 import MatchesWonCard from '../components/MatchesWonCard';
+import FriendsCard from '../components/FriendsCard';
+
 export default function Page() {
     return (
         <div>
@@ -34,7 +36,7 @@ export default function Page() {
                     </div>
 
                     <div className="m-5">
-                        <RecentActCard />
+                        <FriendsCard />
                     </div>
 
                     <div className="m-5">
