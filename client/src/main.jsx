@@ -6,6 +6,7 @@ import Home from './pages/Home.jsx';
 import Login from './pages/Login.jsx';
 import Session from './pages/Session.jsx';
 import Leaderboards from './pages/Leaderboards.jsx';
+import TopMemes from './pages/TopMemes.jsx'; 
 import HowToPlay from './pages/HowToPlay.jsx';
 import './global.css';
 
@@ -26,6 +27,10 @@ const router = createBrowserRouter([
             {
                 path: '/leaderboards',
                 element: <Leaderboards />,
+            },
+            {
+                path: '/top-memes', 
+                element: <TopMemes />,
             },
             {
                 path: '/how-to-play',

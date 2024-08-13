@@ -169,6 +169,29 @@ const resolvers = {
                 throw new Error('Failed to create session');
             }
         },
+        submitRoundResponse: async (_, { sessionId, title, url }, ctx) => {
+            if (!ctx.user || !ctx.user.id) throw new Error('Not authenticated');
+
+            const session = await Session.findById(sessionId);
+            if (!session) throw new Error('No session found');
+
+            if (!session.currentRound.players.some(p => p.toString() === ctx.user.id)) {
+                throw new Error('You are not a player in this round');
+            }
+
+            if (!session.isOnGoing) throw new Error('The session is not ongoing');
+
+            const response = {
+                player: ctx.user.id,
+                title,
+                url,
+                totalScore: 0,
+            };
+
+            session.currentRound.responses.push(response);
+            await session.save();
+            return true;
+        },
         updateUser: async (_, { id, username, password }) => {
             const updates = {};
             if (username) updates.username = username;

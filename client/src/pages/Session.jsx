@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom';
 import { useThrottle } from '../hooks/useThrottle';
 import { useQuery } from '@apollo/client';
 import { QUERY_CURRENT_ROUND } from '../../util/queries';
+import { SUBMIT_ROUND_RESPONSE } from '../../util/mutations';
 import Loading from '../components/Loading';
 import Error from '../components/Error';
 import axios from 'axios';
@@ -67,12 +68,6 @@ export default function Session() {
         setGiphyResults(data?.data);
     }, 2000);
 
-    const handleSetSelectedGIF = gif => {
-        setSelectedGif(gif);
-        setPromptInput('');
-        setGiphyResults([]);
-    };
-
     const {
         loading: roundDataLoading,
         data: { currentRound: roundData } = {},
@@ -81,10 +76,32 @@ export default function Session() {
         variables: { id: sessionId },
     });
 
+    const handleSetSelectedGIF = gif => {
+        setSelectedGif(gif);
+        setPromptInput('');
+        setGiphyResults([]);
+    };
+
+    const handleSubmit = () => {
+        if (!selectedGif) {
+            return;
+        }
+
+        try {
+            SUBMIT_ROUND_RESPONSE({
+                variables: {
+                    sessionId,
+                    title: selectedGif.title,
+                    url: selectedGif.images.original.url,
+                },
+            });
+        } catch (e) {
+            console.error('No selected GIF');
+        }
+    };
+
     useEffect(() => {
         if (roundData) {
-            console.log(roundData);
-
             const createdAt = Date.parse(roundData.createdAt);
             const now = Date.now();
             const endTime = createdAt + ROUND_DURATION;
@@ -146,7 +163,9 @@ export default function Session() {
             <section className="h-full flex flex-grow items-center justify-center">
                 <div className="relative bg-white flex flex-col items-center w-fit md:w-3/12 font-bold text-center gap-4 px-8 py-6 rounded-lg shadow-lg">
                     <div className="w-full flex justify-between items-center">
-                        <h6 className="text-gray-500 font-bold text-lg">Round 1/5</h6>
+                        <h6 className="text-gray-500 font-bold text-lg">
+                            Round {roundData.roundNumber}/5
+                        </h6>
                     </div>
                     {roundTimeLeft > 0 && (
                         <h5 className="text-gray-700 text-2xl">
@@ -168,7 +187,8 @@ export default function Session() {
                             />
                             <button
                                 className="bg-[#55883A] w-fit text-white px-8 py-3 rounded-lg shadow-lg"
-                                disabled={roundTimeLeft <= 0}>
+                                disabled={roundTimeLeft <= 0}
+                                onClick={handleSubmit}>
                                 Submit
                             </button>
                         </>
@@ -203,7 +223,6 @@ export default function Session() {
 
 function CopyCodeButton({ code }) {
     const [copied, setCopied] = useState(false);
-    const dialogRef = useRef(null);
 
     const handleCopy = () => {
         if (!('clipboard' in navigator)) {
