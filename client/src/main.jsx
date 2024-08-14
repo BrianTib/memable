@@ -8,6 +8,7 @@ import Session from './pages/Session.jsx';
 import Leaderboards from './pages/Leaderboards.jsx';
 import TopMemes from './pages/TopMemes.jsx'; 
 import HowToPlay from './pages/HowToPlay.jsx';
+import Profile from './pages/Profile.jsx'
 import './global.css';
 
 const router = createBrowserRouter([
@@ -39,6 +40,10 @@ const router = createBrowserRouter([
             {
                 path: '/session/:sessionId',
                 element: <Session />,
+            },
+            {
+                path: '/profile',
+                element: <Profile />,
             },
         ],
     },
