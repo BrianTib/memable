@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { prettyNumber } from '../../util/util';
 import RecentActCard from '../components/RecentActCard';
 import MatchesWonCard from '../components/MatchesWonCard';
-import FriendsCard from '../components/MatchesWonCard';
+import FriendsCard from '../components/FriendsCard';
 
 export default function Page() {
     return (
